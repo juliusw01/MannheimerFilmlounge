@@ -133,5 +133,11 @@ public class RoomController {
 		}
 		
 	}
+	
+	@DeleteMapping("/all")
+	public ResponseEntity<Object> deleteAllRooms(){
+		repo.deleteAll();
+		return new ResponseEntity<Object>("All Rooms gone", HttpStatus.OK);
+	}
 
 }
