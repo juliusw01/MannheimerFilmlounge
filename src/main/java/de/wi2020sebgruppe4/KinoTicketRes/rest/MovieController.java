@@ -145,10 +145,7 @@ public class MovieController {
 	
 	@DeleteMapping("/all")
 	public ResponseEntity<Object> deleteAllMovies(){
-		Iterable<Movie> list = repo.findAll();
-		repo.deleteAll(list);
-		
-		//repo.deleteAll();
+		repo.deleteAll();
 		return new ResponseEntity<Object>("All Movies gone", HttpStatus.OK);
 	}
 }
