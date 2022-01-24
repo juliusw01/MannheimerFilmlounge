@@ -125,5 +125,11 @@ public class LayoutController {
 			return new ResponseEntity<Object>("Layout "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@DeleteMapping("/all")
+	public ResponseEntity<Object> deleteAllLayouts(){
+		repo.deleteAll();
+		return new ResponseEntity<Object>("All Layouts gone", HttpStatus.OK);
+	}
 
 }

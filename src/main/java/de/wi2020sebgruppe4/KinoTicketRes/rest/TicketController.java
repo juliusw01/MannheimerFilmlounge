@@ -144,5 +144,11 @@ public class TicketController {
 		}
 		
 	}
+	
+	@DeleteMapping("/all")
+	public ResponseEntity<Object> deleteAllTickets(){
+		repo.deleteAll();
+		return new ResponseEntity<Object>("All Tickets gone", HttpStatus.OK);
+	}
 
 }
