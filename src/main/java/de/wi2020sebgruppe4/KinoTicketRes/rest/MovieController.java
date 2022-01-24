@@ -142,4 +142,10 @@ public class MovieController {
 			return new ResponseEntity<Object>("Movie "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@DeleteMapping("/all")
+	public ResponseEntity<Object> deleteAllMovies(){
+		repo.deleteAll();
+		return new ResponseEntity<Object>("All Movies now gone", HttpStatus.OK);
+	}
 }
