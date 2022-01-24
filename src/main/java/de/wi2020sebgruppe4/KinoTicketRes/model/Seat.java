@@ -42,6 +42,10 @@ public class Seat {
 	@NotNull
 	private boolean isBlocked;
 	
+	@Column
+	@NotNull
+	private boolean isBooked;
+	
 	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "layout_id", referencedColumnName = "id")
@@ -107,6 +111,14 @@ public class Seat {
 		this.isBlocked = isBlocked;
 	}
 
+	public boolean isBooked() {
+		return isBooked;
+	}
+
+	public void setBooked(boolean isBooked) {
+		this.isBooked = isBooked;
+	}
+
 	public Layout getLayout() {
 		return layout;
 	}
@@ -129,6 +141,7 @@ public class Seat {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + (isBlocked ? 1231 : 1237);
+		result = prime * result + (isBooked ? 1231 : 1237);
 		result = prime * result + (isPremium ? 1231 : 1237);
 		result = prime * result + ((layout == null) ? 0 : layout.hashCode());
 		result = prime * result + rowLocation;
@@ -153,6 +166,8 @@ public class Seat {
 			return false;
 		if (isBlocked != other.isBlocked)
 			return false;
+		if (isBooked != other.isBooked)
+			return false;
 		if (isPremium != other.isPremium)
 			return false;
 		if (layout == null) {
@@ -171,5 +186,7 @@ public class Seat {
 			return false;
 		return true;
 	}
+
+	
 
 }

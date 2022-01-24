@@ -25,6 +25,7 @@ import de.wi2020sebgruppe4.KinoTicketRes.model.Layout;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Movie;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Room;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Seat;
+import de.wi2020sebgruppe4.KinoTicketRes.model.SeatRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Show;
 import de.wi2020sebgruppe4.KinoTicketRes.model.ShowRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.LayoutRepository;
@@ -64,7 +65,6 @@ public class ShowController {
 	@Autowired
 	SeatRepository seatRepository;
 	
-	@CrossOrigin("https://kinoticketres.web.app/")
 	@PutMapping("/add")
 	public ResponseEntity<Object> addShow(@RequestBody ShowRequestObject sro){
 		
@@ -124,6 +124,27 @@ public class ShowController {
 		
 	}
 	
+	@PutMapping("/bookSeat")
+	public ResponseEntity<Object> blockSeat(@RequestBody SeatRequestObject sro){
+		UUID seatID = sro.seatID;
+		Seat toBook = new Seat();
+		Optional<Seat> seat = seatRepository.findById(seatID);
+		try {
+			toBook = seat.get();
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<Object>("Seat " + seatID + " not found!", HttpStatus.NOT_FOUND);
+		}
+		
+		if(sro.block == true && sro.deblock == false) {
+			toBook.setBlocked(true);
+		}else if(sro.block == false && sro.deblock == true) {
+			toBook.setBlocked(false);
+		}else {
+			return new ResponseEntity<Object>("bock and deblock must have different values!", HttpStatus.NOT_ACCEPTABLE);
+		}
+		
+		return new ResponseEntity<Object>(seatRepository.save(toBook), HttpStatus.OK);
+	}
 	
 	@GetMapping("")
 	public ResponseEntity<Object> getAll(){
