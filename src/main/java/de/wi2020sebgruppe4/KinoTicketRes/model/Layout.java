@@ -25,7 +25,7 @@ public class Layout {
 	@NotNull
 	private int rowCount;
 	
-	@OneToOne(mappedBy = "layout", fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "layout", fetch = FetchType.LAZY, orphanRemoval = true)
 	private Room room;
 
 	public Layout() {
