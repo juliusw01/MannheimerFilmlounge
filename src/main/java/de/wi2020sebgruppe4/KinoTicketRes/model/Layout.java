@@ -30,6 +30,12 @@ public class Layout {
 		
 	}
 
+	public Layout(@NotNull int totalSeats, @NotNull int rowCount, @NotNull Room room) {
+		super();
+		this.totalSeats = totalSeats;
+		this.rowCount = rowCount;
+	}
+
 	public Layout(@NotNull int totalSeats, @NotNull int rowCount) {
 		super();
 		this.totalSeats = totalSeats;
