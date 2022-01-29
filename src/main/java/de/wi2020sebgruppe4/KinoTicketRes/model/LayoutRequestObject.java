@@ -8,12 +8,10 @@ public class LayoutRequestObject {
 	
 	public int totalSeats;
 	public int rowCount;
-	public UUID roomID;
 	
-	public LayoutRequestObject(@NotNull int totalSeats, @NotNull int rowCount, UUID roomID) {
+	public LayoutRequestObject(@NotNull int totalSeats, @NotNull int rowCount) {
 		this.totalSeats = totalSeats;
 		this.rowCount = rowCount;
-		this.roomID = roomID != null ? roomID : null;
 	}
 
 }

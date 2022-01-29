@@ -39,8 +39,8 @@ public class RequestObjectTest {
 	@Test
 	@DisplayName("LayoutRequestObject Test")
 	public void layoutRequestObjectTest() {
-		LayoutRequestObject l = new LayoutRequestObject(2, 2, new UUID(2, 2));
-		LayoutRequestObject l2 = new LayoutRequestObject(2, 2, null);
+		LayoutRequestObject l = new LayoutRequestObject(2, 2);
+		LayoutRequestObject l2 = new LayoutRequestObject(2, 2);
 	}
 	
 	@Test
