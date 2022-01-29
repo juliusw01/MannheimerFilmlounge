@@ -74,7 +74,7 @@ public class RoomControllerTest {
 	
 	Layout getLayout() {
 		Room r = new Room(true);
-		Layout l = new Layout(30, 3, r);
+		Layout l = new Layout(30, 3);
 		l.setId(uuid);
 		return l;
 	}
