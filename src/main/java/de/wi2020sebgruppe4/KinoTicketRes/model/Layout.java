@@ -24,20 +24,16 @@ public class Layout {
 	@Column
 	@NotNull
 	private int rowCount;
-	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "layout", orphanRemoval = true)
-	@JoinColumn(name = "room_id", referencedColumnName = "id")
-	private Room room;
+
 
 	public Layout() {
 		
 	}
 
-	public Layout(@NotNull int totalSeats, @NotNull int rowCount, Room room) {
+	public Layout(@NotNull int totalSeats, @NotNull int rowCount) {
 		super();
 		this.totalSeats = totalSeats;
 		this.rowCount = rowCount;
-		this.room = room;
 	}
 
 	public UUID getId() {
@@ -64,13 +60,6 @@ public class Layout {
 		this.rowCount = rowCount;
 	}
 
-	public Room getRoom() {
-		return room;
-	}
-
-	public void setRoom(Room room) {
-		this.room = room;
-	}
 
 	@Override
 	public int hashCode() {
@@ -90,11 +79,6 @@ public class Layout {
 		if (getClass() != obj.getClass())
 			return false;
 		Layout other = (Layout) obj;
-		if (room == null) {
-			if (other.room != null)
-				return false;
-		} else if (!room.equals(other.room))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
