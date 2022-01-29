@@ -205,5 +205,11 @@ public class ShowController {
 					HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@DeleteMapping("/all")
+	public ResponseEntity<Object> deleteAllShows(){
+		repo.deleteAll();
+		return new ResponseEntity<Object>("All Shows gone", HttpStatus.OK);
+	}
 
 }

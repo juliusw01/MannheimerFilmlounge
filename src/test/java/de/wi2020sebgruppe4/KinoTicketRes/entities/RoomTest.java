@@ -68,7 +68,7 @@ public class RoomTest {
 		Room r3 = new Room(false, l);
 		Room r4 = new Room(true, l);
 		Room r5 = new Room(true, l);
-		Layout l2 = new Layout(30, 3, r);
+		Layout l2 = new Layout(30, 3);
 		r4.setId(uuid);
 		r5.setId(uuid);
 		assertEquals(true, r.equals(r));

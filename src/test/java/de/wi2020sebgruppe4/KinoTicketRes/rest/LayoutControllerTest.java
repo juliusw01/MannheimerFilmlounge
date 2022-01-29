@@ -66,7 +66,7 @@ public class LayoutControllerTest {
     }
 	
 	Layout getLayout() {
-		Layout l = new Layout(50, 10, getRoom());
+		Layout l = new Layout(50, 10);
 		l.setId(uuid);
 		return l;
 	}
@@ -119,7 +119,7 @@ public class LayoutControllerTest {
 		when(roomRepository.findById(uuid)).thenReturn(getOptionalRoom());
 		mvc.perform(put("/layouts/add/")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(jtco.write(new LayoutRequestObject(2, 2, uuid)).getJson()))
+				.content(jtco.write(new LayoutRequestObject(2, 2)).getJson()))
 				.andExpect(status().isCreated());
 	}
 	
@@ -129,7 +129,7 @@ public class LayoutControllerTest {
 		when(roomRepository.findById(new UUID(0, 0))).thenReturn(getOptionalRoom());
 		mvc.perform(put("/layouts/add/")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(jtco.write(new LayoutRequestObject(2, 2, uuid)).getJson()))
+				.content(jtco.write(new LayoutRequestObject(2, 2)).getJson()))
 				.andExpect(status().isNotFound());
 	}
 	
@@ -139,7 +139,7 @@ public class LayoutControllerTest {
 		when(roomRepository.findById(uuid)).thenReturn(getOptionalRoom());
 		mvc.perform(put("/layouts/add/")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(jtco.write(new LayoutRequestObject(2, 2, null)).getJson()))
+				.content(jtco.write(new LayoutRequestObject(2, 2)).getJson()))
 				.andExpect(status().isCreated());
 	}
 	
@@ -149,7 +149,7 @@ public class LayoutControllerTest {
 		when(roomRepository.findById(uuid)).thenReturn(getOptionalRoom());
 		mvc.perform(put("/layouts/update/"+uuid)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(jtco.write(new LayoutRequestObject(2, 2, uuid)).getJson()))
+				.content(jtco.write(new LayoutRequestObject(2, 2)).getJson()))
 				.andExpect(status().isOk());
 	}
 	
@@ -159,7 +159,7 @@ public class LayoutControllerTest {
 		when(roomRepository.findById(new UUID(0, 0))).thenReturn(getOptionalRoom());
 		mvc.perform(put("/layouts/update/"+uuid)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(jtco.write(new LayoutRequestObject(2, 2, uuid)).getJson()))
+				.content(jtco.write(new LayoutRequestObject(2, 2)).getJson()))
 				.andExpect(status().isNotFound());
 	}
 	
@@ -169,7 +169,7 @@ public class LayoutControllerTest {
 		when(roomRepository.findById(uuid)).thenReturn(getOptionalRoom());
 		mvc.perform(put("/layouts/update/"+uuid)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(jtco.write(new LayoutRequestObject(2, 2, uuid)).getJson()))
+				.content(jtco.write(new LayoutRequestObject(2, 2)).getJson()))
 				.andExpect(status().isNotFound());
 	}
 	
@@ -179,7 +179,7 @@ public class LayoutControllerTest {
 		when(roomRepository.findById(uuid)).thenReturn(getOptionalRoom());
 		mvc.perform(put("/layouts/update/"+uuid)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(jtco.write(new LayoutRequestObject(2, 2, null)).getJson()))
+				.content(jtco.write(new LayoutRequestObject(2, 2)).getJson()))
 				.andExpect(status().isOk());
 	}
 	

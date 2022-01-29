@@ -144,4 +144,10 @@ public class ReviewController {
 			return new ResponseEntity<Object>("Review "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@DeleteMapping("/all")
+	public ResponseEntity<Object> deleteAllReviews(){
+		repo.deleteAll();
+		return new ResponseEntity<Object>("All Reviews gone", HttpStatus.OK);
+	}
 }

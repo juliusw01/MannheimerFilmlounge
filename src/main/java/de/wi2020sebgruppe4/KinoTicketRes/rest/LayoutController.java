@@ -53,6 +53,7 @@ public class LayoutController {
 	public ResponseEntity<Object> addSeatingPlan(@RequestBody LayoutRequestObject lro){
 		Layout layout = new Layout();
 		Room room = new Room();
+		/*
 		if(lro.roomID != null) {
 			try {
 				Optional<Room> cinemaRoomSearch = roomRepository.findById(lro.roomID);
@@ -63,6 +64,8 @@ public class LayoutController {
 				return new ResponseEntity<Object>("Room "+lro.roomID+" not found!", HttpStatus.NOT_FOUND );
 			}
 		}
+
+		 */
 		layout.setTotalSeats(lro.totalSeats);
 		layout.setRowCount(lro.rowCount);
 		room.setLayout(layout);
@@ -77,7 +80,7 @@ public class LayoutController {
 		try {
 			Layout layout = new Layout();
 			layout.setId(oldSeatingPlan.get().getId());
-
+/*
 			if(lro.roomID != null) {
 				try {
 					Optional<Room> cinemaRoom =  roomRepository.findById(lro.roomID);
@@ -87,6 +90,8 @@ public class LayoutController {
 					return new ResponseEntity<Object>("Room "+lro.roomID+" not found!", HttpStatus.NOT_FOUND );
 				}
 			}
+
+ */
 			layout.setTotalSeats(lro.totalSeats);
 			layout.setRowCount(lro.rowCount);
 			return new ResponseEntity<Object>(repo.save(layout), HttpStatus.OK);
@@ -124,6 +129,12 @@ public class LayoutController {
 		}catch(Exception e) {
 			return new ResponseEntity<Object>("Layout "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@DeleteMapping("/all")
+	public ResponseEntity<Object> deleteAllLayouts(){
+		repo.deleteAll();
+		return new ResponseEntity<Object>("All Layouts gone", HttpStatus.OK);
 	}
 
 }

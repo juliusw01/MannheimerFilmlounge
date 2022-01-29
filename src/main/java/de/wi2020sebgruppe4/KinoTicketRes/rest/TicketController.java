@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
-//import de.wi2020sebgruppe4.KinoTicketRes.SendingTicketsViaMail.JavaMail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +26,7 @@ import de.wi2020sebgruppe4.KinoTicketRes.repositories.SeatRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.ShowRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.TicketRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.UserRepository;
+
 @Controller
 @RestController
 @CrossOrigin(origins = 
@@ -72,6 +72,7 @@ public class TicketController {
 		} catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("Seat " + seatID + " not found!", HttpStatus.NOT_FOUND);
 		}
+		
 		Boolean blocked = toBook.isBlocked();
 		Boolean booked = toBook.isBooked();
 		if(blocked) {
@@ -100,13 +101,6 @@ public class TicketController {
 		}catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("User "+tro.userID+" not found!",
 					HttpStatus.NOT_FOUND);
-		}
-
-		try {
-			//JavaMail.sendTicketConformationMail(toAdd.getUser().getEmail(), toAdd.getShow().getMovie().getTitel(), toAdd.getShow().getShowDate());
-		}catch (Exception e){
-			return new ResponseEntity<Object>("Mail could not send.",
-					HttpStatus.CONFLICT);
 		}
 		
 		return new ResponseEntity<Object>(repo.save(toAdd), HttpStatus.CREATED);
@@ -150,4 +144,11 @@ public class TicketController {
 		}
 		
 	}
+	
+	@DeleteMapping("/all")
+	public ResponseEntity<Object> deleteAllTickets(){
+		repo.deleteAll();
+		return new ResponseEntity<Object>("All Tickets gone", HttpStatus.OK);
+	}
+
 }

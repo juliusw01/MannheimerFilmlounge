@@ -85,7 +85,7 @@ public class SeatTest {
     @DisplayName("Test equals")
     public void equalsTest() {
     	Room r = new Room(true);
-    	Layout l2 = new Layout(30, 3, r);
+    	Layout l2 = new Layout(30, 3);
     	Show show2 = new Show();
     	show2.setId(uuid);
     	Seat s = new Seat(2, 2, false, false, layout, show);

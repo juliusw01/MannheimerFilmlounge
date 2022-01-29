@@ -40,6 +40,10 @@ public class User {
 	@NonNull
 	private String password;
 	
+	@Column
+	@NonNull
+	private String role;
+	
 	public User() {
 		
 	}
@@ -51,6 +55,7 @@ public class User {
 		this.firstName = firstName;
 		this.email = email;
 		this.password = password;
+		this.role = "User";
 	}
 
 	public String getUserName() {
@@ -99,6 +104,14 @@ public class User {
 
 	public void setId(UUID id) {
 		this.id = id;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	@Override

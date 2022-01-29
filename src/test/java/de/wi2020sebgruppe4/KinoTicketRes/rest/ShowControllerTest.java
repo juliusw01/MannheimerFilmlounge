@@ -104,7 +104,7 @@ public class ShowControllerTest {
 	}
 	
 	Room getRoom() {
-		Layout l = new Layout(50, 10, new Room());
+		Layout l = new Layout(50, 10);
 		l.setId(uuid);
 		Room r = new Room(false, l);
 		r.setId(uuid);
