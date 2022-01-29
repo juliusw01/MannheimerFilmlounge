@@ -25,7 +25,6 @@ public class Layout {
 	@NotNull
 	private int rowCount;
 
-
 	public Layout() {
 		
 	}
