@@ -25,7 +25,8 @@ public class Layout {
 	@NotNull
 	private int rowCount;
 	
-	@OneToOne(mappedBy = "layout", fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "layout", orphanRemoval = true)
+	@JoinColumn(name = "room_id", referencedColumnName = "id")
 	private Room room;
 
 	public Layout() {
