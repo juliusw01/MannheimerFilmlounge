@@ -30,8 +30,7 @@ public class LayoutTest {
     @DisplayName("constructor test")
     public void constructorTest() {
         Room room = new Room(true);
-        Layout l = new Layout(30, 3, room);
-        assertEquals(room, l.getRoom());
+        Layout l = new Layout(30, 3);
         assertEquals(30, l.getTotalSeats());
         assertEquals(3, l.getRowCount());
     }
@@ -44,9 +43,6 @@ public class LayoutTest {
         l.setId(uuid);
         assertEquals(uuid, l.getId());
         
-        l.setRoom(r);
-        assertEquals(r, l.getRoom());
-        
         l.setRowCount(3);
         assertEquals(3, l.getRowCount());
 
@@ -58,16 +54,16 @@ public class LayoutTest {
     @DisplayName("Test hashCode")
     public void hashCodeTest() {
         Room r = new Room();;
-        Layout l1 = new Layout(30, 3, r);
-        Layout l2 = new Layout(30, 3, r);
+        Layout l1 = new Layout(30, 3);
+        Layout l2 = new Layout(30, 3);
         l1.setId(uuid);
 
         assertEquals(l1.hashCode(), l2.hashCode());
         assertEquals(l1.equals(l2), false);
 
         // Test equals method
-        Layout l3 = new Layout(20, 2, r);
-        Layout l4 = new Layout(50, 2, r);
+        Layout l3 = new Layout(20, 2);
+        Layout l4 = new Layout(50, 2);
 
         assertNotEquals(l1.hashCode(), l3.hashCode());
         assertEquals(l2.equals(l4), false);
@@ -76,10 +72,10 @@ public class LayoutTest {
     @Test
     @DisplayName("Test equals")
     public void equalsTest() {
-    	Layout l = new Layout(30, 3, r);
-    	Layout l2 = new Layout(30, 3, r);
-    	Layout l3 = new Layout(30, 3, null);
-    	Layout l4 = new Layout(10, 3, r);
+    	Layout l = new Layout(30, 3);
+    	Layout l2 = new Layout(30, 3);
+    	Layout l3 = new Layout(30, 3);
+    	Layout l4 = new Layout(10, 3);
     	l4.setId(uuid);
     	//run equals - methods
     	assertEquals(true, l.equals(l));
@@ -88,9 +84,7 @@ public class LayoutTest {
     	assertEquals(false, l.equals(r));
     	assertEquals(false, l3.equals(l));
     	assertEquals(false, l3.equals(l));
-    	l.setRoom(null);
     	assertEquals(true, l.equals(l3));
-    	l.setRoom(r);
     	l.setId(uuid);
     	assertEquals(false, l.equals(l2));
     	assertEquals(false, l2.equals(l));
