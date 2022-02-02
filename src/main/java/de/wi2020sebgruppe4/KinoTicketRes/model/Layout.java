@@ -25,7 +25,7 @@ public class Layout {
 	@NotNull
 	private int rowCount;
 	
-	@OneToMany(mappedBy = "layout")
+	@OneToOne(mappedBy = "layout")
 	private Room room;
 
 	public Layout() {
@@ -69,6 +69,7 @@ public class Layout {
 		this.rowCount = rowCount;
 	}
 	
+	/*
 	public Room getRoom() {
 		return room;
 	}
@@ -76,7 +77,7 @@ public class Layout {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-
+	*/
 	@Override
 	public int hashCode() {
 		int result = 1;
