@@ -36,7 +36,7 @@ public class Movie {
 	@NotNull
 	private String director;
 	
-	@Column(length = Integer.MAX_VALUE)
+	@Column(columnDefinition = "TEXT")
 	@NotNull
 	private String description;
 	
