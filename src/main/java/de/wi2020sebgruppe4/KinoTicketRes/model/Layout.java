@@ -25,6 +25,8 @@ public class Layout {
 	@NotNull
 	private int rowCount;
 	
+	
+	//Mathis pls fix 
 	@OneToOne(mappedBy = "layout", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "room", referencedColumnName = "id")
 	private Room room;
