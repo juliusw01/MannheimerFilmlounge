@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="c_layouts")
-@JsonIgnoreProperties("room")
 public class Layout {
 	
 	@Id
@@ -26,26 +25,20 @@ public class Layout {
 	private int rowCount;
 	
 	
-	//Mathis pls fix 
-	@OneToOne(mappedBy = "layout", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "room", referencedColumnName = "id")
-	private Room room;
+//	//Mathis pls fix 
+//	@OneToOne(mappedBy = "layout", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+//	@JoinColumn(name = "room", referencedColumnName = "id")
+//	private Room room;
 
 	public Layout() {
 		
-	}
-
-	public Layout(@NotNull int totalSeats, @NotNull int rowCount, @NotNull Room room) {
-		super();
-		this.totalSeats = totalSeats;
-		this.rowCount = rowCount;
-		this.room = room;
 	}
 
 	public Layout(@NotNull int totalSeats, @NotNull int rowCount) {
 		super();
 		this.totalSeats = totalSeats;
 		this.rowCount = rowCount;
+//		this.room = room;
 	}
 
 	public UUID getId() {

@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgruppe4.KinoTicketRes.model.Layout;
 import de.wi2020sebgruppe4.KinoTicketRes.model.LayoutRequestObject;
-import de.wi2020sebgruppe4.KinoTicketRes.model.Room;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.LayoutRepository;
-import de.wi2020sebgruppe4.KinoTicketRes.repositories.RoomRepository;
 
 @Controller
 @RestController
@@ -44,15 +42,10 @@ public class LayoutController {
 	@Autowired
 	LayoutRepository repo;
 	
-	@Autowired
-	RoomRepository roomRepository;
-	
-	
 	@PutMapping("/add")
 	@Transactional
 	public ResponseEntity<Object> addSeatingPlan(@RequestBody LayoutRequestObject lro){
 		Layout layout = new Layout();
-		Room room = new Room();
 		/*
 		if(lro.roomID != null) {
 			try {
@@ -68,39 +61,38 @@ public class LayoutController {
 		 */
 		layout.setTotalSeats(lro.totalSeats);
 		layout.setRowCount(lro.rowCount);
-		room.setLayout(layout);
 		return new ResponseEntity<Object>(repo.save(layout), HttpStatus.CREATED);
 	}
 	
 	
-	@PutMapping("/update/{id}")
-	public ResponseEntity<Object> updateSeatingPlan(@PathVariable UUID id, @RequestBody LayoutRequestObject lro){
-		Optional<Layout> oldSeatingPlan = repo.findById(id);
-		
-		try {
-			Layout layout = new Layout();
-			layout.setId(oldSeatingPlan.get().getId());
-/*
-			if(lro.roomID != null) {
-				try {
-					Optional<Room> cinemaRoom =  roomRepository.findById(lro.roomID);
-					layout.setRoom(cinemaRoom.get());
-				}
-				catch(NoSuchElementException e) {
-					return new ResponseEntity<Object>("Room "+lro.roomID+" not found!", HttpStatus.NOT_FOUND );
-				}
-			}
-
- */
-			layout.setTotalSeats(lro.totalSeats);
-			layout.setRowCount(lro.rowCount);
-			return new ResponseEntity<Object>(repo.save(layout), HttpStatus.OK);
-			
-		} catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>("Layout "+id+" not found!", 
-					HttpStatus.NOT_FOUND );
-		}
-	}
+//	@PutMapping("/update/{id}")
+//	public ResponseEntity<Object> updateSeatingPlan(@PathVariable UUID id, @RequestBody LayoutRequestObject lro){
+//		Optional<Layout> oldSeatingPlan = repo.findById(id);
+//		
+//		try {
+//			Layout layout = new Layout();
+//			layout.setId(oldSeatingPlan.get().getId());
+///*
+//			if(lro.roomID != null) {
+//				try {
+//					Optional<Room> cinemaRoom =  roomRepository.findById(lro.roomID);
+//					layout.setRoom(cinemaRoom.get());
+//				}
+//				catch(NoSuchElementException e) {
+//					return new ResponseEntity<Object>("Room "+lro.roomID+" not found!", HttpStatus.NOT_FOUND );
+//				}
+//			}
+//
+// */
+//			layout.setTotalSeats(lro.totalSeats);
+//			layout.setRowCount(lro.rowCount);
+//			return new ResponseEntity<Object>(repo.save(layout), HttpStatus.OK);
+//			
+//		} catch(NoSuchElementException e) {
+//			return new ResponseEntity<Object>("Layout "+id+" not found!", 
+//					HttpStatus.NOT_FOUND );
+//		}
+//	}
 	
 	
 	@GetMapping("")

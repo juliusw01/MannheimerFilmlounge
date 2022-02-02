@@ -18,8 +18,7 @@ public class Room {
 	@NotNull
 	private boolean canShow3D;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-
+	@OneToOne
 	@JoinColumn(name = "layout_id", referencedColumnName = "id")
 	private Layout layout;
 	
