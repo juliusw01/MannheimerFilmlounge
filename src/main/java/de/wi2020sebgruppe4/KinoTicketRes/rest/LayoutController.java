@@ -46,53 +46,28 @@ public class LayoutController {
 	@Transactional
 	public ResponseEntity<Object> addSeatingPlan(@RequestBody LayoutRequestObject lro){
 		Layout layout = new Layout();
-		/*
-		if(lro.roomID != null) {
-			try {
-				Optional<Room> cinemaRoomSearch = roomRepository.findById(lro.roomID);
-				room = cinemaRoomSearch.get();
-				layout.setRoom(room);
-			}
-			catch(NoSuchElementException e) {
-				return new ResponseEntity<Object>("Room "+lro.roomID+" not found!", HttpStatus.NOT_FOUND );
-			}
-		}
-
-		 */
 		layout.setTotalSeats(lro.totalSeats);
 		layout.setRowCount(lro.rowCount);
 		return new ResponseEntity<Object>(repo.save(layout), HttpStatus.CREATED);
 	}
 	
 	
-//	@PutMapping("/update/{id}")
-//	public ResponseEntity<Object> updateSeatingPlan(@PathVariable UUID id, @RequestBody LayoutRequestObject lro){
-//		Optional<Layout> oldSeatingPlan = repo.findById(id);
-//		
-//		try {
-//			Layout layout = new Layout();
-//			layout.setId(oldSeatingPlan.get().getId());
-///*
-//			if(lro.roomID != null) {
-//				try {
-//					Optional<Room> cinemaRoom =  roomRepository.findById(lro.roomID);
-//					layout.setRoom(cinemaRoom.get());
-//				}
-//				catch(NoSuchElementException e) {
-//					return new ResponseEntity<Object>("Room "+lro.roomID+" not found!", HttpStatus.NOT_FOUND );
-//				}
-//			}
-//
-// */
-//			layout.setTotalSeats(lro.totalSeats);
-//			layout.setRowCount(lro.rowCount);
-//			return new ResponseEntity<Object>(repo.save(layout), HttpStatus.OK);
-//			
-//		} catch(NoSuchElementException e) {
-//			return new ResponseEntity<Object>("Layout "+id+" not found!", 
-//					HttpStatus.NOT_FOUND );
-//		}
-//	}
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Object> updateSeatingPlan(@PathVariable UUID id, @RequestBody LayoutRequestObject lro){
+		Optional<Layout> oldSeatingPlan = repo.findById(id);
+		
+		try {
+			Layout layout = new Layout();
+			layout.setId(oldSeatingPlan.get().getId());
+			layout.setTotalSeats(lro.totalSeats);
+			layout.setRowCount(lro.rowCount);
+			return new ResponseEntity<Object>(repo.save(layout), HttpStatus.OK);
+			
+		} catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>("Layout "+id+" not found!", 
+					HttpStatus.NOT_FOUND );
+		}
+	}
 	
 	
 	@GetMapping("")
