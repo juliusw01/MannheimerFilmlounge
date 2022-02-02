@@ -24,6 +24,9 @@ public class Layout {
 	@Column
 	@NotNull
 	private int rowCount;
+	
+	@OneToMany(mappedBy = "layout")
+	private Room room;
 
 	public Layout() {
 		
@@ -33,6 +36,7 @@ public class Layout {
 		super();
 		this.totalSeats = totalSeats;
 		this.rowCount = rowCount;
+		this.room = room;
 	}
 
 	public Layout(@NotNull int totalSeats, @NotNull int rowCount) {
@@ -64,7 +68,14 @@ public class Layout {
 	public void setRowCount(int rowCount) {
 		this.rowCount = rowCount;
 	}
+	
+	public Room getRoom() {
+		return room;
+	}
 
+	public void setRoom(Room room) {
+		this.room = room;
+	}
 
 	@Override
 	public int hashCode() {
