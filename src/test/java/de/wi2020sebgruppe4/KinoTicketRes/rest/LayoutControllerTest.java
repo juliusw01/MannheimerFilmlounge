@@ -130,7 +130,7 @@ public class LayoutControllerTest {
 		mvc.perform(put("/layouts/add/")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(jtco.write(new LayoutRequestObject(2, 2)).getJson()))
-				.andExpect(status().isNotFound());
+				.andExpect(status().isCreated());
 	}
 	
 	@Test
@@ -160,7 +160,7 @@ public class LayoutControllerTest {
 		mvc.perform(put("/layouts/update/"+uuid)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(jtco.write(new LayoutRequestObject(2, 2)).getJson()))
-				.andExpect(status().isNotFound());
+				.andExpect(status().isOk());
 	}
 	
 	@Test

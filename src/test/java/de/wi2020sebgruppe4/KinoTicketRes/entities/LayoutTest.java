@@ -82,8 +82,8 @@ public class LayoutTest {
     	assertEquals(true, l.equals(l2));
     	assertEquals(false, l.equals(null));
     	assertEquals(false, l.equals(r));
-    	assertEquals(false, l3.equals(l));
-    	assertEquals(false, l3.equals(l));
+    	assertEquals(true, l3.equals(l));
+    	assertEquals(true, l3.equals(l));
     	assertEquals(true, l.equals(l3));
     	l.setId(uuid);
     	assertEquals(false, l.equals(l2));
