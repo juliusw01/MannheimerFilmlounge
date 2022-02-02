@@ -26,6 +26,7 @@ public class Layout {
 	private int rowCount;
 	
 	@OneToMany(mappedBy = "layout", cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "room", referencedColumnName = "id")
 	private Room room;
 
 	public Layout() {
