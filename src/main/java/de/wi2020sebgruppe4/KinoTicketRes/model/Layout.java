@@ -25,7 +25,7 @@ public class Layout {
 	@NotNull
 	private int rowCount;
 	
-	@OneToMany(mappedBy = "layout", cascade = CascadeType.REMOVE)
+	@OneToOne(mappedBy = "layout", cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "room", referencedColumnName = "id")
 	private Room room;
 
