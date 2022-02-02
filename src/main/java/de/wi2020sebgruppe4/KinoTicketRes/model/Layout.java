@@ -25,7 +25,7 @@ public class Layout {
 	@NotNull
 	private int rowCount;
 	
-	@OneToOne(mappedBy = "layout")
+	@OneToOne(mappedBy = "layout", cascade = CascadeType.REMOVE)
 	private Room room;
 
 	public Layout() {
