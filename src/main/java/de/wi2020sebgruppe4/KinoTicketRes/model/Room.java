@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="c_rooms")
+@Table(name="g_rooms")
 public class Room {
 	
 	@Id

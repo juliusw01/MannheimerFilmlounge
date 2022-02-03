@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="c_layouts")
+@Table(name="g_layouts")
 public class Layout {
 	
 	@Id

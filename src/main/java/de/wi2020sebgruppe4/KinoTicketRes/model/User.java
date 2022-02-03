@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import org.springframework.lang.NonNull;
 
 @Entity
-@Table(name="c_users")
+@Table(name="g_users")
 public class User {
 	
 	@Id

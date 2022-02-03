@@ -18,7 +18,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 @Entity
-@Table(name="c_reviews")
+@Table(name="g_reviews")
 public class Review {
 	
 	@Id
