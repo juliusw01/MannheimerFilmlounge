@@ -102,6 +102,7 @@ public class TicketTest {
     	Ticket ticket13 = new Ticket(true, 2.0, 2, null, show, seat);
     	Ticket ticket14 = new Ticket(true, 2.0, 2, null, show, seat);
     	Ticket ticket15 = new Ticket(true, 2.0, 2, new User(), show, seat);
+    	Ticket ticket16 = new Ticket(true, 2.0, 2, user, show, seat);
     	
     	assertEquals(true, ticket.equals(ticket));
     	assertEquals(false, ticket.equals(null));
@@ -122,5 +123,8 @@ public class TicketTest {
     	assertEquals(true, ticket13.equals(ticket14));
     	assertEquals(false, ticket.equals(ticket15));
     	assertEquals(true, ticket.equals(ticket2));
+    	ticket.setPaid(false);
+    	ticket16.setPaid(true);
+    	assertEquals(false, ticket.equals(ticket16));
     }
 }

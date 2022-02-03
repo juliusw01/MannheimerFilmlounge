@@ -75,6 +75,7 @@ public class SeatTest {
 	    Seat s2 = new Seat(2, 2, false, false, layout, show);
 	    Seat s3 = new Seat();
 	    s3.setBlocked(true);
+	    s3.setBooked(true);
 	    s3.setPremium(true);
 	    s3.setId(uuid);
 	    assertEquals(s.hashCode(), s.hashCode());
@@ -105,7 +106,7 @@ public class SeatTest {
     	Seat s11 = new Seat(2, 1, false, false, layout, show);
     	Seat s12 = new Seat(2, 2, false, false, layout, null);
     	Seat s13 = new Seat(2, 2, false, false, layout, null);
-    	Seat s14 = new Seat(2, 2, false, false, layout, show2);
+    	Seat s14 = new Seat(2, 2, false, false, layout, show);
     	
     	assertEquals(true, s.equals(s));
     	assertEquals(false, s.equals(null));
@@ -125,5 +126,9 @@ public class SeatTest {
     	assertEquals(true, s12.equals(s13));
     	assertEquals(false, s.equals(s13));
     	assertEquals(true, s.equals(s2));
+    	s.setBooked(true);
+    	s14.setBooked(false);
+    	assertEquals(false, s.equals(s14));
+    	
     }
 }

@@ -11,7 +11,8 @@ import org.springframework.test.context.TestPropertySource;
 class KinoTicketResApplicationTests {
 	
 	@Test
-	void contextLoads() {
+	void mainTest() {
+		//KinoTicketResApplication.main(new String[] {}); not working :(
 	}
 
 }

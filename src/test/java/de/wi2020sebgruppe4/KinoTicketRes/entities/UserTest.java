@@ -47,6 +47,7 @@ public class UserTest {
        user.setName("Name");
        user.setUserName("Username");
        user.setPassword("password");
+       user.setRole("Admin");
        
        assertEquals("Username", user.getUserName());
        assertEquals("Name", user.getName());
@@ -54,6 +55,7 @@ public class UserTest {
        assertEquals("email@email.com", user.getEmail());
        assertEquals("password", user.getPassword());
        assertEquals(uuid, user.getId());
+       assertEquals("Admin", user.getRole());
     }
 	
 	@Test

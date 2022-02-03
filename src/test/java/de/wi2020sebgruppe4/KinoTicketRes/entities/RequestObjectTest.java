@@ -13,8 +13,10 @@ import de.wi2020sebgruppe4.KinoTicketRes.model.LayoutRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.MovieRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.ReviewRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.RoomRequestObject;
+import de.wi2020sebgruppe4.KinoTicketRes.model.SeatRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.ShowRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.TicketRequestObject;
+import de.wi2020sebgruppe4.KinoTicketRes.model.UserRegistrationObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.UserRequestObject;
 
 @SpringBootTest
@@ -66,5 +68,17 @@ public class RequestObjectTest {
 	@DisplayName("UserRequestObject Test")
 	public void userRequestObjectTest() {
 		UserRequestObject u = new UserRequestObject("userName", "name", "firstName", "email", "password");
+	}
+	
+	@Test
+	@DisplayName("SeatRequestObject")
+	public void seatRequestObjectTest() {
+		SeatRequestObject s = new SeatRequestObject(new UUID(2, 2), false, false);
+	}
+	
+	@Test
+	@DisplayName("UserRegistrationObject")
+	public void userRegistrationObjectTest() {
+		UserRegistrationObject ur= new UserRegistrationObject("userName", "name", "firstName", "email", "password", "confirmPassword");
 	}
 }

@@ -2,9 +2,9 @@ package de.wi2020sebgruppe4.KinoTicketRes.rest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.wi2020sebgruppe4.KinoTicketRes.model.User;
+import de.wi2020sebgruppe4.KinoTicketRes.model.UserRegistrationObject;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.UserRepository;
 
 @SpringBootTest
@@ -45,6 +46,7 @@ public class UserControllerTest {
     WebApplicationContext wac;
 	
 	JacksonTester<User> jt;
+	JacksonTester<UserRegistrationObject> jturo;
 	
 	static UUID uuid;
 	
@@ -94,6 +96,80 @@ public class UserControllerTest {
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound())
 				.andReturn().getResponse();
+	}
+	
+	@Test
+	void testGetUsersReviews() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalUser());
+		MockHttpServletResponse response = mvc.perform(get("/users/" + uuid + "/reviews")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andReturn().getResponse();
+	}
+	
+	@Test
+	void testGetUsersReviewsException() throws Exception {
+		when(repo.findById(new UUID(0, 0))).thenReturn(getOptionalUser());
+		MockHttpServletResponse response = mvc.perform(get("/users/" + uuid + "/reviews")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound())
+				.andReturn().getResponse();
+	}
+	
+	@Test
+	void testGetUsersTickets() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalUser());
+		MockHttpServletResponse response = mvc.perform(get("/users/" + uuid + "/tickets")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andReturn().getResponse();
+	}
+	
+	@Test
+	void testGetUsersTicketsException() throws Exception {
+		when(repo.findById(new UUID(0, 0))).thenReturn(getOptionalUser());
+		MockHttpServletResponse response = mvc.perform(get("/users/" + uuid + "/tickets")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound())
+				.andReturn().getResponse();
+	}
+	
+	@Test
+	void testRegisterUser() throws Exception {
+		mvc.perform(put("/users/register")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jturo.write(new UserRegistrationObject("Username", "Name", "FirstName", "email@email.com", "password", "password")).getJson()))
+				.andExpect(status().isCreated());
+	}
+	
+	@Test
+	void testRegisterUserWrongPw() throws Exception {
+		mvc.perform(put("/users/register")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jturo.write(new UserRegistrationObject("Username", "Name", "FirstName", "email@email.com", "password", "WRONGpassword")).getJson()))
+				.andExpect(status().isNotAcceptable());
+	}
+	
+	@Test
+	void testRegisterUserUsernameAlreadyTaken() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalUser());
+		when(repo.findByuserName("Username")).thenReturn(getOptionalUser());
+		
+		mvc.perform(put("/users/register")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jturo.write(new UserRegistrationObject("Username", "Name", "FirstName", "email@email.com", "password", "password")).getJson()))
+				.andExpect(status().isNotAcceptable());
+	}
+	
+	@Test
+	void testRegisterUserEmailAlreadyTaken() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalUser());
+		when(repo.findByemail("email@email.com")).thenReturn(getOptionalUser());
+		
+		mvc.perform(put("/users/register")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jturo.write(new UserRegistrationObject("Username", "Name", "FirstName", "email@email.com", "password", "password")).getJson()))
+				.andExpect(status().isNotAcceptable());
 	}
 	
 	@Test
