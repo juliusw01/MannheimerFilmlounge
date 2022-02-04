@@ -95,7 +95,7 @@ public class TicketControllerTest {
 		}
 	
 	User getUser() {
-		User u = new User("NewUser", "Name", "FirstName", "jwa_home@hotmail.de", "password");
+		User u = new User("NewUser", "Name", "FirstName", "noreply.kinores@gmail.com", "password");
 		u.setId(uuid);
 		return u;
 	}
