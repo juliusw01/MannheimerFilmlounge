@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class TicketBestätigung {
 
-    public static Message prepareMessage(Session session, String myAccount, String empfaenger, String titel, Date date){
+    public static Message prepareMessage(Session session, String myAccount, String empfaenger, String titel, Date date, Date time){
         try {
             Message message = new MimeMessage(session);
 
@@ -30,8 +30,8 @@ public class TicketBestätigung {
             // Textteil des Body-Parts
             messageBodyPart.setText("Lieber Kunde, \n \nvielen Dank für Ihre Buchung! \n \n" +
                     "Viel Spaß bei dem Film " + titel + " \n" +
-                    "Sie haben folgende Vorstellung gebucht: " + date + ".\n \n" +
-                    "Einen angenehmen Aufenthalt wünscht Ihnen \n \n" +
+                    "Sie haben die Vorstellung am " + date + " um " + time + "Uhr gebucht.\n \n" +
+                    "Einen angenehmen Aufenthalt wünscht Ihnen \n " +
                     "Gruppe 4");
             // Body-Part dem Multipart-Wrapper hinzufügen
             multipart.addBodyPart(messageBodyPart);
