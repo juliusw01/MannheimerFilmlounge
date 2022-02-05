@@ -132,6 +132,12 @@ public class TicketControllerTest {
 		return Optional.of(s);
 	}
 	
+	Optional<Seat> getBookedOptionalSeat(boolean blocked) {
+		Seat s = getSeat(blocked);
+		s.setBooked(true);
+		return Optional.of(s);
+	}
+	
 	Optional<Show> getOptionalShow() {
 		Show s = getShow();
 		return Optional.of(s);
@@ -168,6 +174,18 @@ public class TicketControllerTest {
 		when(repo.findById(uuid)).thenReturn(getOptionalTicket());
 		when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
 		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(false));
+		when(showRepository.findById(uuid)).thenReturn(getOptionalShow());
+		mvc.perform(put("/tickets/add")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtco.write(new TicketRequestObject(uuid, uuid, 2.0, uuid, 4)).getJson()))
+				.andExpect(status().isCreated());
+	}
+	
+	@Test
+	void testAddTicketBookedException() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalTicket());
+		when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+		when(seatRepository.findById(uuid)).thenReturn(getBookedOptionalSeat(false));
 		when(showRepository.findById(uuid)).thenReturn(getOptionalShow());
 		mvc.perform(put("/tickets/add")
 				.contentType(MediaType.APPLICATION_JSON)
