@@ -94,8 +94,23 @@ public class UserController {
 		toAddUser.setFirstName(uro.firstName);
 		toAddUser.setEmail(uro.email);
 		toAddUser.setPassword(uro.password);
+		toAddUser.setRole("User");
 		
 		return new ResponseEntity<Object>( repo.save(toAddUser), HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/setAdmin/{id}")
+	public ResponseEntity<Object> setAdmin(@PathVariable UUID id) {
+		Optional<User> user = repo.findById(id);
+		User toChange = null;
+		try {
+			toChange = user.get();
+			toChange.setRole("Admin");
+			repo.save(toChange);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<Object>("User with id "+id+" not found", HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Object>("Role changed", HttpStatus.OK);
 	}
 	
 	@PutMapping("/login")
