@@ -83,7 +83,6 @@ public class TicketController {
 			return new ResponseEntity<Object>("Seat "+seatID+" is already booked!", HttpStatus.NOT_ACCEPTABLE);
 		}
 		toBook.setBooked(true);
-		seatRepository.save(toBook);
 		
 		Ticket toAdd = new Ticket();
 		toAdd.setSeat(toBook);
@@ -111,7 +110,8 @@ public class TicketController {
 		}catch (Exception e){
 			return new ResponseEntity<Object>("Mail did not send properly", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
+		
+		seatRepository.save(toBook);
 		return new ResponseEntity<Object>(repo.save(toAdd), HttpStatus.CREATED);
 	}
 	
