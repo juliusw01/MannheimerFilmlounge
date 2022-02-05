@@ -180,6 +180,13 @@ public class UserControllerTest {
 	}
 	
 	@Test
+	void testSetAdminException() throws Exception {
+		when(repo.findById(new UUID(0, 0))).thenReturn(getOptionalUser());
+		mvc.perform(put("/users/setAdmin/"+uuid))
+		.andExpect(status().isNotFound());
+	}
+	
+	@Test
 	void testLogin() throws Exception {
 		when(repo.findById(uuid)).thenReturn(getOptionalUser());
 		when(repo.findByemail("email@email.com")).thenReturn(getOptionalUser());
@@ -232,6 +239,18 @@ public class UserControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(jt.write(new User("Username", "Name", "FirstName", "email@email.com", "WRONGpassword")).getJson()))
 				.andExpect(status().isUnauthorized());
+	}
+
+	
+	@Test
+	void testLoginException5() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalUser());
+		when(repo.findByemail("email@email.com")).thenReturn(getOptionalUser());
+		when(repo.findByuserName("Username")).thenReturn(getOptionalUser());
+		mvc.perform(put("/users/login")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jt.write(new User("wrongusername", "Name", "FirstName", null, "password")).getJson()))
+				.andExpect(status().isNotFound());
 	}
 	
 	@Test

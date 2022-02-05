@@ -131,11 +131,6 @@ public class UserController {
 			toCheck = user.get();
 		}
 		catch (NoSuchElementException e) {
-			if(uro.email != null) {
-				return new ResponseEntity<Object>("User with Email: "+ uro.email +" not found :(", HttpStatus.NOT_FOUND);
-			}else if(uro.userName != null) {
-				return new ResponseEntity<Object>("User with username: "+ uro.userName +" not found :(", HttpStatus.NOT_FOUND);
-			}
 			return new ResponseEntity<Object>("User with username or email not found :(", HttpStatus.NOT_FOUND);
 		}
 		
