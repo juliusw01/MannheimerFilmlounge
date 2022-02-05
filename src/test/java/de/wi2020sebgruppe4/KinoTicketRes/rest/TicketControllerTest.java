@@ -190,7 +190,7 @@ public class TicketControllerTest {
 		mvc.perform(put("/tickets/add")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(jtco.write(new TicketRequestObject(uuid, uuid, 2.0, uuid, 4)).getJson()))
-				.andExpect(status().isCreated());
+				.andExpect(status().isNotAcceptable());
 	}
 	
 	@Test
