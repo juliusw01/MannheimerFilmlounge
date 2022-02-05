@@ -111,20 +111,19 @@ public class ShowController {
 				}
 				catch(NoSuchElementException e)
 				{
-					return new ResponseEntity<Object>("",
+					return new ResponseEntity<Object>("Room with id "+sro.roomID+" not found!",
 							HttpStatus.NOT_FOUND);
 				}
 			}
 			catch(NoSuchElementException e)
 			{
-				return new ResponseEntity<Object>("",
+				return new ResponseEntity<Object>("Layout to Room not found",
 						HttpStatus.NOT_FOUND);
 			}
 			catch(Exception e) {
 				return new ResponseEntity<Object>(e.getStackTrace(), HttpStatus.BAD_REQUEST);
 			}
 		}
-
 		return new ResponseEntity<Object>(repo.save(toAdd), HttpStatus.CREATED);
 		
 	}
