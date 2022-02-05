@@ -95,29 +95,23 @@ public class ShowController {
 			try {
 				Room room = roomSearch.get();
 				toAdd.setRoom(room);
-				try {
-					Layout layout = room.getLayout();
-					int seatsPerRow = layout.getTotalSeats() / layout.getRowCount();
-					List<Seat> showSeats = new ArrayList<>();
-					
-					for(int i = 1; i <= layout.getRowCount(); i++) {
-						for(int j = 1; j <= seatsPerRow; j++) {
-							Seat newSeat = new Seat(i, j, false, false, layout, toAdd);
-							showSeats.add(newSeat);
-						}
+				
+				Layout layout = room.getLayout();
+				int seatsPerRow = layout.getTotalSeats() / layout.getRowCount();
+				//List<Seat> showSeats = new ArrayList<>();
+				
+				for(int i = 1; i <= layout.getRowCount(); i++) {
+					for(int j = 1; j <= seatsPerRow; j++) {
+						Seat newSeat = new Seat(i, j, false, false, layout, toAdd);
+						seatRepository.save(newSeat);
+						//showSeats.add(newSeat);
 					}
-					
-					seatRepository.saveAll(showSeats);
 				}
-				catch(NoSuchElementException e)
-				{
-					return new ResponseEntity<Object>("Room with id "+sro.roomID+" not found!",
-							HttpStatus.NOT_FOUND);
-				}
+				//seatRepository.saveAll(showSeats);
 			}
 			catch(NoSuchElementException e)
 			{
-				return new ResponseEntity<Object>("Layout to Room not found",
+				return new ResponseEntity<Object>("Layout or Room not found",
 						HttpStatus.NOT_FOUND);
 			}
 			catch(Exception e) {

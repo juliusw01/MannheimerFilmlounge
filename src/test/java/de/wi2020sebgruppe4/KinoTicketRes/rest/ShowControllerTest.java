@@ -35,13 +35,17 @@ import de.wi2020sebgruppe4.KinoTicketRes.model.Layout;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Movie;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Room;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Seat;
+import de.wi2020sebgruppe4.KinoTicketRes.model.SeatRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Show;
 import de.wi2020sebgruppe4.KinoTicketRes.model.ShowRequestObject;
+import de.wi2020sebgruppe4.KinoTicketRes.model.Ticket;
+import de.wi2020sebgruppe4.KinoTicketRes.model.User;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.LayoutRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.MovieRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.RoomRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.SeatRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.ShowRepository;
+import de.wi2020sebgruppe4.KinoTicketRes.repositories.TicketRepository;
 
 @SpringBootTest
 @TestPropertySource(locations="classpath:test.properties")
@@ -64,11 +68,16 @@ public class ShowControllerTest {
 	@MockBean
 	LayoutRepository layoutRepository;
 	
+	@MockBean 
+	TicketRepository ticketRepository;
+	
 	@Autowired
     WebApplicationContext wac;
 	
+	
 	JacksonTester<Show> jt;
 	JacksonTester<ShowRequestObject> jtco;	
+	JacksonTester<SeatRequestObject> jtso;
 	static UUID uuid;
 	
 	@BeforeAll
@@ -103,6 +112,17 @@ public class ShowControllerTest {
 		return s;
 	}
 	
+	List<Ticket> getTicket() {
+		Ticket t = new Ticket(false, 2.0, 2, new User(), getShow(), getSeat());
+		List<Ticket> ticketList = new ArrayList<Ticket>();
+		t.setId(uuid);
+		ticketList.add(t);
+		ticketList.add(t);
+		ticketList.add(t);
+		ticketList.add(t);
+		return ticketList;
+	}
+	
 	Room getRoom() {
 		Layout l = new Layout(50, 10);
 		l.setId(uuid);
@@ -123,6 +143,11 @@ public class ShowControllerTest {
 		seats.add(getSeat());
 		seats.add(getSeat());
 		return seats;
+	}
+	
+	Optional<List<Ticket>> getOptionalTicket() {
+		List<Ticket> t = getTicket();
+		return Optional.of(t);
 	}
 	
 	Optional<Show> getOptionalShow() {
@@ -199,6 +224,19 @@ public class ShowControllerTest {
 	}
 	
 	@Test
+	void testAddShowNoRoom() throws Exception {
+		
+		when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+		when(roomRepository.findById(uuid)).thenReturn(getOptionalRoom());
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat());
+		
+		mvc.perform(put("/shows/add/")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtco.write(new ShowRequestObject(new Date(2021-12-30), new Time(12-12-12), uuid, null)).getJson()))
+				.andExpect(status().isCreated());
+	}
+	
+	@Test
 	void testAddShowBadRequest() throws Exception {
 		
 		when(repo.findById(uuid)).thenReturn(getOptionalShow());
@@ -251,6 +289,69 @@ public class ShowControllerTest {
 		mvc.perform(put("/shows/add/")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(jtco.write(new ShowRequestObject(new Date(2021-12-30), new Time(12-12-12), uuid, uuid)).getJson()))
+				.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	void testBlockSeat() throws Exception {
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat());
+		
+		mvc.perform(put("/shows/bookSeat")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtso.write(new SeatRequestObject(new UUID(2, 2), true, false)).getJson()))
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	void testDeBlockSeat() throws Exception {
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat());
+		
+		mvc.perform(put("/shows/bookSeat")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtso.write(new SeatRequestObject(new UUID(2, 2), false, true)).getJson()))
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	void testBlockSeatSameValue() throws Exception {
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat());
+		
+		mvc.perform(put("/shows/bookSeat")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtso.write(new SeatRequestObject(new UUID(2, 2), true, true)).getJson()))
+				.andExpect(status().isNotAcceptable());
+	}
+	
+	@Test
+	void testBlockSeatSameValue2() throws Exception {
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat());
+		
+		mvc.perform(put("/shows/bookSeat")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtso.write(new SeatRequestObject(new UUID(2, 2), false, false)).getJson()))
+				.andExpect(status().isNotAcceptable());
+	}
+	
+	@Test
+	void testCanelShow() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalShow());
+		when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+		when(roomRepository.findById(new UUID(0, 0))).thenReturn(getOptionalRoom());
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat());
+		when(ticketRepository.findAllByShow(getShow())).thenReturn(getOptionalTicket());
+		
+		mvc.perform(put("/shows/cancel/"+uuid)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	void testBlockSeatException() throws Exception {
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat());
+		
+		mvc.perform(put("/shows/bookSeat")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtso.write(new SeatRequestObject(null, false, true)).getJson()))
 				.andExpect(status().isNotFound());
 	}
 	
