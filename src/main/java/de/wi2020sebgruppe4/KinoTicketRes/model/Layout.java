@@ -23,12 +23,6 @@ public class Layout {
 	@Column
 	@NotNull
 	private int rowCount;
-	
-	
-//	//Mathis pls fix 
-//	@OneToOne(mappedBy = "layout", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-//	@JoinColumn(name = "room", referencedColumnName = "id")
-//	private Room room;
 
 	public Layout() {
 		
@@ -38,7 +32,6 @@ public class Layout {
 		super();
 		this.totalSeats = totalSeats;
 		this.rowCount = rowCount;
-//		this.room = room;
 	}
 
 	public UUID getId() {
@@ -65,15 +58,6 @@ public class Layout {
 		this.rowCount = rowCount;
 	}
 	
-	/*
-	public Room getRoom() {
-		return room;
-	}
-
-	public void setRoom(Room room) {
-		this.room = room;
-	}
-	*/
 	@Override
 	public int hashCode() {
 		int result = 1;

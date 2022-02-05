@@ -115,6 +115,32 @@ public class TicketController {
 		return new ResponseEntity<Object>(repo.save(toAdd), HttpStatus.CREATED);
 	}
 	
+	@PutMapping("/cancel/{id}")
+	public ResponseEntity<Object> cancelTicket(@PathVariable UUID id) {
+		Ticket ticket = new Ticket();
+		try {
+			ticket = repo.findById(id).get();
+			ticket.setCanceled(true);
+			repo.save(ticket);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<Object>("Ticket "+ id +" not found!", HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Object>("Ticket canceled", HttpStatus.OK);
+	}
+	
+	@PutMapping("/uncancel/{id}")
+	public ResponseEntity<Object> uncancelTicket(@PathVariable UUID id) {
+		Ticket ticket = new Ticket();
+		try {
+			ticket = repo.findById(id).get();
+			ticket.setCanceled(false);
+			repo.save(ticket);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<Object>("Ticket "+ id +" not found!", HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<Object>("Ticket uncanceled", HttpStatus.OK);
+	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getSpecific(@PathVariable UUID id){
@@ -129,7 +155,7 @@ public class TicketController {
 	
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Object> cancelTicket(@PathVariable UUID id){
+	public ResponseEntity<Object> deleteTicket(@PathVariable UUID id){
 		
 		try {
 			Ticket ticket = repo.findById(id).get();
@@ -139,8 +165,7 @@ public class TicketController {
 				seatRepository.save(seat);
 			}
 			catch(NoSuchElementException e) {
-				return new ResponseEntity<Object>("Seat "+ticket.getSeat().getId()+" not found!",
-						HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Object>("Seat "+ticket.getSeat().getId()+" not found!", HttpStatus.NOT_FOUND);
 			}
 			ticket.setPaid(false);
 			ticket.setSeat(null);

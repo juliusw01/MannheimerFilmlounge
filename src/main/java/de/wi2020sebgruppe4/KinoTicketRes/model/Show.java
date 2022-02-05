@@ -54,6 +54,10 @@ public class Show {
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<Seat> seats = new ArrayList<>();
 	
+	@Column
+	@NotNull
+	private boolean canceled;
+	
 	public Show() {
 		
 	}
@@ -64,6 +68,7 @@ public class Show {
 		this.startTime = startTime;
 		this.movie = movie;
 		this.room = room;
+		this.canceled = false;
 	}
 
 	public UUID getId() {
@@ -106,6 +111,14 @@ public class Show {
 		this.room = room;
 	}
 
+	public boolean isCanceled() {
+		return canceled;
+	}
+
+	public void setCanceled(boolean canceled) {
+		this.canceled = canceled;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -113,7 +126,6 @@ public class Show {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((movie == null) ? 0 : movie.hashCode());
 		result = prime * result + ((room == null) ? 0 : room.hashCode());
-		// result = prime * result + ((seats == null) ? 0 : seats.hashCode());
 		result = prime * result + ((showDate == null) ? 0 : showDate.hashCode());
 		result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
 		return result;
@@ -143,13 +155,6 @@ public class Show {
 				return false;
 		} else if (!room.equals(other.room))
 			return false;
-		/*
-		if (seats == null) {
-			if (other.seats != null)
-				return false;
-		} else if (!seats.equals(other.seats))
-			return false;
-		*/
 		if (showDate == null) {
 			if (other.showDate != null)
 				return false;

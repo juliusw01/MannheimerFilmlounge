@@ -28,11 +28,13 @@ import de.wi2020sebgruppe4.KinoTicketRes.model.Seat;
 import de.wi2020sebgruppe4.KinoTicketRes.model.SeatRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Show;
 import de.wi2020sebgruppe4.KinoTicketRes.model.ShowRequestObject;
+import de.wi2020sebgruppe4.KinoTicketRes.model.Ticket;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.LayoutRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.MovieRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.RoomRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.SeatRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.ShowRepository;
+import de.wi2020sebgruppe4.KinoTicketRes.repositories.TicketRepository;
 
 @Controller
 @RestController
@@ -64,6 +66,9 @@ public class ShowController {
 	
 	@Autowired
 	SeatRepository seatRepository;
+	
+	@Autowired
+	TicketRepository ticketRepository;
 	
 	@PutMapping("/add")
 	public ResponseEntity<Object> addShow(@RequestBody ShowRequestObject sro){
@@ -144,6 +149,51 @@ public class ShowController {
 		}
 		
 		return new ResponseEntity<Object>(seatRepository.save(toBook), HttpStatus.OK);
+	}
+	
+	@PutMapping("/cancel/{id}")
+	public ResponseEntity<Object> cancelShow(@PathVariable UUID id){
+		Show show = new Show();
+		try {
+			show = repo.findById(id).get();
+			try {
+				List<Ticket> ticketList = ticketRepository.findAllByShow(show).get();
+				for(Ticket t: ticketList) {
+					t.setCanceled(true);
+				}
+				ticketRepository.saveAll(ticketList);
+			} catch (NoSuchElementException e) {
+				return new ResponseEntity<Object>("Tickets for show "+ id +" not found!", HttpStatus.NOT_FOUND);
+			}
+			show.setCanceled(true);
+			repo.save(show);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<Object>("Show "+ id +" not found!", HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Object>("Show and corresponding tickets cancelled", HttpStatus.OK);
+	}
+	
+	@PutMapping("/uncancel/{id}")
+	public ResponseEntity<Object> uncancelTicket(@PathVariable UUID id) {
+		Show show = new Show();
+		try {
+			show = repo.findById(id).get();
+			try {
+				List<Ticket> ticketList = ticketRepository.findAllByShow(show).get();
+				for(Ticket t: ticketList) {
+					t.setCanceled(false);
+				}
+				ticketRepository.saveAll(ticketList);
+			} catch (NoSuchElementException e) {
+				return new ResponseEntity<Object>("Tickets for show "+ id +" not found!", HttpStatus.NOT_FOUND);
+			}
+			show.setCanceled(false);
+			repo.save(show);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<Object>("Show "+ id +" not found!", HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<Object>("Show and corresponding tickets uncancelled", HttpStatus.OK);
 	}
 	
 	@GetMapping("")

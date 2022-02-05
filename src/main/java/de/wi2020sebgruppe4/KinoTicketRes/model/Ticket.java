@@ -19,7 +19,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 @Entity
-@Table(name="g_tickets")
+@Table(name="h_tickets")
 public class Ticket {
 	
 	@Id
@@ -53,6 +53,10 @@ public class Ticket {
 	@JoinColumn(name="seat_id", referencedColumnName = "id")
 	private Seat seat;
 	
+	@Column
+	@NotNull
+	private boolean canceled;
+	
 	public Ticket() {
 		
 	}
@@ -65,6 +69,7 @@ public class Ticket {
 		this.show = show;
 		this.seat = seat;
 		this.paymentMethod = paymentMethod;
+		this.canceled = false;
 	}
 
 	public UUID getId() {
@@ -121,6 +126,14 @@ public class Ticket {
 
 	public void setSeat(Seat seat) {
 		this.seat = seat;
+	}
+	
+	public boolean isCanceled() {
+		return canceled;
+	}
+
+	public void setCanceled(boolean canceled) {
+		this.canceled = canceled;
 	}
 
 	@Override

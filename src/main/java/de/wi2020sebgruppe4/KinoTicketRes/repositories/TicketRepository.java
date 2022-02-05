@@ -6,9 +6,11 @@ import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
+import de.wi2020sebgruppe4.KinoTicketRes.model.Show;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Ticket;
 import de.wi2020sebgruppe4.KinoTicketRes.model.User;
 
 public interface TicketRepository extends CrudRepository<Ticket, UUID> {
 	Optional<List<Ticket>> findAllByUser(User user);
+	Optional<List<Ticket>> findAllByShow(Show show);
 }
