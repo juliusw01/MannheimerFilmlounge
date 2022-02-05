@@ -115,7 +115,8 @@ public class ShowController {
 						HttpStatus.NOT_FOUND);
 			}
 			catch(Exception e) {
-				return new ResponseEntity<Object>(e.getStackTrace(), HttpStatus.BAD_REQUEST);
+				e.printStackTrace();
+				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 			}
 		}
 		return new ResponseEntity<Object>(repo.save(toAdd), HttpStatus.CREATED);

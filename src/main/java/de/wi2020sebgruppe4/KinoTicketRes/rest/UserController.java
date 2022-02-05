@@ -143,7 +143,7 @@ public class UserController {
 			return new ResponseEntity<Object>("Wrong password", HttpStatus.UNAUTHORIZED);
 		}
 		
-		return new ResponseEntity<Object>("Password correct", HttpStatus.ACCEPTED);
+		return new ResponseEntity<Object>(user, HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping("/{id}/tickets")

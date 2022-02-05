@@ -346,6 +346,67 @@ public class ShowControllerTest {
 	}
 	
 	@Test
+	void testCanelShowTicketException() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalShow());
+		when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+		when(roomRepository.findById(new UUID(0, 0))).thenReturn(getOptionalRoom());
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat());
+		
+		mvc.perform(put("/shows/cancel/"+uuid)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	void testCanelShowException() throws Exception {
+		when(repo.findById(new UUID(0, 0))).thenReturn(getOptionalShow());
+		when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+		when(seatRepository.findById(new UUID(0, 0))).thenReturn(getOptionalSeat());
+		when(ticketRepository.findAllByShow(getShow())).thenReturn(getOptionalTicket());
+		
+		mvc.perform(put("/shows/cancel/"+uuid)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	void testUnCanelShow() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalShow());
+		when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+		when(roomRepository.findById(new UUID(0, 0))).thenReturn(getOptionalRoom());
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat());
+		when(ticketRepository.findAllByShow(getShow())).thenReturn(getOptionalTicket());
+		
+		mvc.perform(put("/shows/uncancel/"+uuid)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	void testUnCanelShowTicketException() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalShow());
+		when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+		when(roomRepository.findById(new UUID(0, 0))).thenReturn(getOptionalRoom());
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat());
+		
+		mvc.perform(put("/shows/uncancel/"+uuid)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	void testUnCanelShowException() throws Exception {
+		when(repo.findById(new UUID(0, 0))).thenReturn(getOptionalShow());
+		when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+		when(seatRepository.findById(new UUID(0, 0))).thenReturn(getOptionalSeat());
+		when(ticketRepository.findAllByShow(getShow())).thenReturn(getOptionalTicket());
+		
+		mvc.perform(put("/shows/uncancel/"+uuid)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
+	}
+	
+	@Test
 	void testBlockSeatException() throws Exception {
 		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat());
 		
@@ -395,5 +456,11 @@ public class ShowControllerTest {
 		when(repo.findById(new UUID(0, 0))).thenReturn(getOptionalShow());
 		mvc.perform(delete("/shows/"+uuid))
 		.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	void testDeleteAll() throws Exception {
+		mvc.perform(delete("/shows/all"))
+		.andExpect(status().isOk());
 	}
 }

@@ -173,6 +173,68 @@ public class UserControllerTest {
 	}
 	
 	@Test
+	void testSetAdmin() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalUser());
+		mvc.perform(put("/users/setAdmin/"+uuid))
+		.andExpect(status().isOk());
+	}
+	
+	@Test
+	void testLogin() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalUser());
+		when(repo.findByemail("email@email.com")).thenReturn(getOptionalUser());
+		when(repo.findByuserName("Username")).thenReturn(getOptionalUser());
+		mvc.perform(put("/users/login")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jt.write(getUser()).getJson()))
+				.andExpect(status().isAccepted());
+	}
+	
+	@Test
+	void testLoginException() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalUser());
+		when(repo.findByemail("email@email.com")).thenReturn(getOptionalUser());
+		when(repo.findByuserName("Username")).thenReturn(getOptionalUser());
+		mvc.perform(put("/users/login")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jt.write(new User("Username", "Name", "FirstName", null, "password")).getJson()))
+				.andExpect(status().isAccepted());
+	}
+	
+	@Test
+	void testLoginException2() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalUser());
+		when(repo.findByemail("email@email.com")).thenReturn(getOptionalUser());
+		when(repo.findByuserName("Username")).thenReturn(getOptionalUser());
+		mvc.perform(put("/users/login")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jt.write(new User(null, "Name", "FirstName",null, "password")).getJson()))
+				.andExpect(status().isNotAcceptable());
+	}
+	
+	@Test
+	void testLoginException3() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalUser());
+		when(repo.findByemail("email@email.com")).thenReturn(getOptionalUser());
+		when(repo.findByuserName("Username")).thenReturn(getOptionalUser());
+		mvc.perform(put("/users/login")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jt.write(new User(null, "Name", "FirstName", "emailfalse@email.com", "password")).getJson()))
+				.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	void testLoginException4() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalUser());
+		when(repo.findByemail("email@email.com")).thenReturn(getOptionalUser());
+		when(repo.findByuserName("Username")).thenReturn(getOptionalUser());
+		mvc.perform(put("/users/login")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jt.write(new User("Username", "Name", "FirstName", "email@email.com", "WRONGpassword")).getJson()))
+				.andExpect(status().isUnauthorized());
+	}
+	
+	@Test
 	void testAddUser() throws Exception {
 		mvc.perform(put("/users/add")
 				.contentType(MediaType.APPLICATION_JSON)

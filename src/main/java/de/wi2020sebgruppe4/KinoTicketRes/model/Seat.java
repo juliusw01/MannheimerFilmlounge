@@ -69,6 +69,7 @@ public class Seat {
 		this.isBlocked = isBlocked;
 		this.layout = layout;
 		this.show = show;
+		this.isBooked = false;
 	}
 
 	public UUID getId() {
