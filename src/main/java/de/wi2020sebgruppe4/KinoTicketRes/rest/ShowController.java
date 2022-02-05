@@ -98,16 +98,16 @@ public class ShowController {
 				
 				Layout layout = room.getLayout();
 				int seatsPerRow = layout.getTotalSeats() / layout.getRowCount();
-				//List<Seat> showSeats = new ArrayList<>();
+				List<Seat> showSeats = new ArrayList<>();
 				
 				for(int i = 1; i <= layout.getRowCount(); i++) {
 					for(int j = 1; j <= seatsPerRow; j++) {
-						Seat newSeat = new Seat(i, j, false, false, layout, toAdd);
-						seatRepository.save(newSeat);
-						//showSeats.add(newSeat);
+						Seat newSeat = new Seat(i, j, false, false, false, layout, toAdd);
+//						seatRepository.save(newSeat);
+						showSeats.add(newSeat);
 					}
 				}
-				//seatRepository.saveAll(showSeats);
+				seatRepository.saveAll(showSeats);
 			}
 			catch(NoSuchElementException e)
 			{
