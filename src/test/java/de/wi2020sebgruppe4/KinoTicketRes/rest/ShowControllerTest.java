@@ -107,7 +107,7 @@ public class ShowControllerTest {
 	}
 	
 	Seat getSeat() {
-		Seat s = new Seat(2, 2, true, false, null, null);
+		Seat s = new Seat(2, 2, true, false, false, null, null);
 		s.setId(uuid);
 		return s;
 	}

@@ -105,7 +105,7 @@ public class TicketControllerTest {
 		Show show = new Show();
 		layout.setId(uuid);
 		show.setId(uuid);
-		Seat s = new Seat(2, 2, false, false, layout, show);
+		Seat s = new Seat(2, 2, false, false, false, layout, show);
 		s.setId(uuid);
 		s.setBlocked(blocked);
 		return s;
