@@ -36,7 +36,7 @@ public class SeatTest {
     @Test
     @DisplayName("constructor test")
     public void constructorTest() {
-	    Seat s = new Seat(2, 2, false, false, layout, show);
+	    Seat s = new Seat(2, 2, false, false, false, layout, show);
 	   
 	    assertEquals(2, s.getRowLocation());
 	    assertEquals(2, s.getSeatLocation());
@@ -71,8 +71,8 @@ public class SeatTest {
     @Test
     @DisplayName("Test hashCode")
     public void hashCodeTest() {
-	    Seat s = new Seat(2, 2, false, false, layout, show);
-	    Seat s2 = new Seat(2, 2, false, false, layout, show);
+	    Seat s = new Seat(2, 2, false, false, false, layout, show);
+	    Seat s2 = new Seat(2, 2, false, false, false, layout, show);
 	    Seat s3 = new Seat();
 	    s3.setBlocked(true);
 	    s3.setBooked(true);
@@ -89,24 +89,24 @@ public class SeatTest {
     	Layout l2 = new Layout(30, 3);
     	Show show2 = new Show();
     	show2.setId(uuid);
-    	Seat s = new Seat(2, 2, false, false, layout, show);
-    	Seat s2 = new Seat(2, 2, false, false, layout, show);
-    	Seat s3 = new Seat(2, 2, false, false, layout, show);
+    	Seat s = new Seat(2, 2, false, false, false, layout, show);
+    	Seat s2 = new Seat(2, 2, false, false, false, layout, show);
+    	Seat s3 = new Seat(2, 2, false, false, false, layout, show);
     	s3.setId(uuid);
-    	Seat s15 = new Seat(2, 2, false, false, layout, show);
+    	Seat s15 = new Seat(2, 2, false, false, false, layout, show);
     	s15.setId(uuid);
-    	Seat s4 = new Seat(2, 2, false, false, layout, show);
+    	Seat s4 = new Seat(2, 2, false, false, false, layout, show);
     	s4.setId(new UUID(2, 12));
-    	Seat s5 = new Seat(2, 2, true, false, layout, show);
-    	Seat s6 = new Seat(2, 2, false, true, layout, show);
-    	Seat s7 = new Seat(2, 2, false, false, null, show);
-    	Seat s8 = new Seat(2, 2, false, false, null, show);
-    	Seat s9 = new Seat(2, 2, false, false, l2, show);
-    	Seat s10 = new Seat(5, 2, false, false, layout, show);
-    	Seat s11 = new Seat(2, 1, false, false, layout, show);
-    	Seat s12 = new Seat(2, 2, false, false, layout, null);
-    	Seat s13 = new Seat(2, 2, false, false, layout, null);
-    	Seat s14 = new Seat(2, 2, false, false, layout, show);
+    	Seat s5 = new Seat(2, 2, true, false, false, layout, show);
+    	Seat s6 = new Seat(2, 2, false, true, false, layout, show);
+    	Seat s7 = new Seat(2, 2, false, false, false, null, show);
+    	Seat s8 = new Seat(2, 2, false, false, false, null, show);
+    	Seat s9 = new Seat(2, 2, false, false, false, l2, show);
+    	Seat s10 = new Seat(5, 2, false, false, false, layout, show);
+    	Seat s11 = new Seat(2, 1, false, false, false, layout, show);
+    	Seat s12 = new Seat(2, 2, false, false, false, layout, null);
+    	Seat s13 = new Seat(2, 2, false, false, false, layout, null);
+    	Seat s14 = new Seat(2, 2, false, false, false, layout, show);
     	
     	assertEquals(true, s.equals(s));
     	assertEquals(false, s.equals(null));

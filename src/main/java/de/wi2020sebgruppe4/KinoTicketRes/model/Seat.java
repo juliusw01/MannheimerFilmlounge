@@ -61,12 +61,13 @@ public class Seat {
 	}
 
 	public Seat(@NotNull int rowLocation, @NotNull int seatLocation, @NotNull boolean isPremium,
-			@NotNull boolean isBlocked, Layout layout, Show show) {
+			@NotNull boolean isBlocked, @NotNull boolean isBooked, Layout layout, Show show) {
 		super();
 		this.rowLocation = rowLocation;
 		this.seatLocation = seatLocation;
 		this.isPremium = isPremium;
 		this.isBlocked = isBlocked;
+		this.isBooked = isBooked;
 		this.layout = layout;
 		this.show = show;
 		this.isBooked = false;
