@@ -35,7 +35,7 @@ public class ShowTest {
 	static void beforeAll() {
 		Layout dummyLayout = new Layout();
 		Show dummyShow = new Show();
-    	Seat s = new Seat(1, 2, false, true, dummyLayout, dummyShow);
+    	Seat s = new Seat(1, 2, false, true, false, dummyLayout, dummyShow);
 		uuid = new UUID(2, 2);
 		date = new Date(2015-03-31);
 		time = new Time(02-50-21);
@@ -95,7 +95,7 @@ public class ShowTest {
     public void equalsTest() {
     	Layout dummyLayout = new Layout();
 		Show dummyShow = new Show();
-    	Seat s = new Seat(2, 2, false, false, dummyLayout, dummyShow);
+    	Seat s = new Seat(2, 2, false, false, false, dummyLayout, dummyShow);
     	List<Seat> seatList2 = new ArrayList<>();
     	seatList2.add(s);
     	Layout l = new Layout();
