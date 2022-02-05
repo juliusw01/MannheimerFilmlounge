@@ -19,7 +19,7 @@ public class JavaMail {
     private static String myAccount = "noreply.kinores@gmail.com";
     private static String myPassword = "buwni4-nixvoc-xydjUt";
 
-    public static void sendTicketConformationMail(String empfaenger, String movieTitel, Date date, Date time) throws Exception{
+    public static void sendTicketConformationMail(String empfaenger, String movieTitel, Date date, Date time) {
 
         Properties properties = setProperties();
 
@@ -33,7 +33,11 @@ public class JavaMail {
         // Message-Objekt erzeugen und senden!
 
         Message message = TicketBestätigung.prepareMessage(session, myAccount, empfaenger, movieTitel, date, time);
-        Transport.send(message); // E-Mail senden!
+        try {
+			Transport.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} // E-Mail senden!
     }
 
     public static void sendMailAdressConformationLink(String empfaenger, String conformationLink) throws MessagingException {

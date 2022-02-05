@@ -1,14 +1,11 @@
 package de.wi2020sebgruppe4.KinoTicketRes.rest;
 
-import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
 
-import de.wi2020sebgruppe4.KinoTicketRes.SendingTicketsViaMail.JavaMail;
-import de.wi2020sebgruppe4.KinoTicketRes.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +19,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.wi2020sebgruppe4.KinoTicketRes.SendingTicketsViaMail.JavaMail;
+import de.wi2020sebgruppe4.KinoTicketRes.model.Movie;
+import de.wi2020sebgruppe4.KinoTicketRes.model.Seat;
+import de.wi2020sebgruppe4.KinoTicketRes.model.Show;
+import de.wi2020sebgruppe4.KinoTicketRes.model.Ticket;
+import de.wi2020sebgruppe4.KinoTicketRes.model.TicketRequestObject;
+import de.wi2020sebgruppe4.KinoTicketRes.model.User;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.SeatRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.ShowRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.TicketRepository;
@@ -105,11 +109,8 @@ public class TicketController {
 		User user = userRepository.findById(tro.userID).get();
 		Movie movie = showRepository.findById(tro.showID).get().getMovie();
 		Show show = showRepository.findById(tro.showID).get();
-		try {
-			JavaMail.sendTicketConformationMail(user.getEmail(), movie.getTitel(), show.getShowDate(), show.getStartTime());
-		}catch (Exception e){
-			return new ResponseEntity<Object>("Mail did not send properly", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		
+		JavaMail.sendTicketConformationMail(user.getEmail(), movie.getTitel(), show.getShowDate(), show.getStartTime());
 		
 		seatRepository.save(toBook);
 		return new ResponseEntity<Object>(repo.save(toAdd), HttpStatus.CREATED);
