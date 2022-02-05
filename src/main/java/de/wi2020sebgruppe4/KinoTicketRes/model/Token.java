@@ -18,7 +18,7 @@ import org.hibernate.annotations.NotFoundAction;
 import org.springframework.lang.NonNull;
 
 @Entity
-@Table(name="g_token")
+@Table(name="tokens")
 public class Token {
 
     @Id

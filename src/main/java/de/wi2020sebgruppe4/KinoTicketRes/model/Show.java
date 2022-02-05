@@ -24,7 +24,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 @Entity
-@Table(name="i_shows")
+@Table(name="shows")
 public class Show {
 	
 	@Id

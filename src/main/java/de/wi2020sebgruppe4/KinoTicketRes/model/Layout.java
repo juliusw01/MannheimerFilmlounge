@@ -2,13 +2,16 @@ package de.wi2020sebgruppe4.KinoTicketRes.model;
 
 import java.util.UUID;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @Entity
-@Table(name="g_layouts")
+@Table(name="layouts")
 public class Layout {
 	
 	@Id
