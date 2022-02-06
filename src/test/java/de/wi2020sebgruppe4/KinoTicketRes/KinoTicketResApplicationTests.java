@@ -19,6 +19,7 @@ class KinoTicketResApplicationTests {
 		KinoTicketResApplication.main(new String[] {"localhost"});
 	}
 	
+	/*
 	@Test
 	void testSecurityConfig() {
 		SecurityConfig s = new SecurityConfig();
@@ -28,4 +29,5 @@ class KinoTicketResApplicationTests {
 			e.printStackTrace();
 		}
 	}
+	*/
 }
