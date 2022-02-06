@@ -164,7 +164,7 @@ public class TokenControllerTest {
 	}
 	
 	@Test
-	void resetWithLinkEmailTaken() throws Exception {
+	void resetWithLinkWrongUser() throws Exception {
 		when(repo.findById(uuid)).thenReturn(getOptionalToken());
 		when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
 		mvc.perform(get("/tokens/resetWithLink/"+uuid)
@@ -196,17 +196,7 @@ public class TokenControllerTest {
 		when(repo.findById(uuid)).thenReturn(getOptionalInvalidToken());
 		when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
 		
-		mvc.perform(put("/tokens/reset/confirm")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(jtro.write(new PasswordResetObject("password", uuid, uuid)).getJson()))
-				.andExpect(status().isUnauthorized());
-	}
-	
-	@Test
-	void resetWithLinkInvalidUser() throws Exception {
-		when(repo.findById(uuid)).thenReturn(getOptionalInvalidToken());
-		when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
-		mvc.perform(put("/tokens/reset/confirm")
+		mvc.perform(get("/tokens/resetWithLink/"+uuid)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(jtro.write(new PasswordResetObject("password", uuid, uuid)).getJson()))
 				.andExpect(status().isUnauthorized());
@@ -221,6 +211,17 @@ public class TokenControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(jtro.write(new PasswordResetObject("password", uuid, uuid)).getJson()))
 				.andExpect(status().isOk());
+	}
+	
+	@Test
+	void resetConfirmInvalidUser() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalToken());
+		when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+		
+		mvc.perform(put("/tokens/reset/confirm")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtro.write(new PasswordResetObject("password", uuid, new UUID(0, 0))).getJson()))
+				.andExpect(status().isUnauthorized());
 	}
 	
 	@Test
