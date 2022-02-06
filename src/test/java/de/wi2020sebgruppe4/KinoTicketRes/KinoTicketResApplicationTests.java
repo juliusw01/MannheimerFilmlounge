@@ -7,12 +7,11 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
 @TestPropertySource(locations="classpath:test.properties")
-@AutoConfigureMockMvc
 class KinoTicketResApplicationTests {
 	
 	@Test
 	void mainTest() {
-		//KinoTicketResApplication.main(new String[] {}); not working :(
+		KinoTicketResApplication.main(new String[] {}); //not working :(
 	}
 
 }

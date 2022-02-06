@@ -82,8 +82,20 @@ public class TokenControllerTest {
 		return Optional.of(getToken());
 	}
 	
+	Optional<Token> getOptionalInvalidToken() {
+		Token t = getToken();
+		t.setValid(false);
+		return Optional.of(t);
+	}
+	
 	Optional<User> getOptionalUser() {
 		return Optional.of(getUser());
+	}
+	
+	Optional<User> getInvalidOptionalUser() {
+		User u = getUser();
+		u.setId(uuid);
+		return Optional.of(u);
 	}
 	
 	@Test
@@ -149,6 +161,55 @@ public class TokenControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(jtro.write(new PasswordResetObject("password", uuid, uuid)).getJson()))
 				.andExpect(status().isOk());
+	}
+	
+	@Test
+	void resetWithLinkEmailTaken() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalToken());
+		when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+		mvc.perform(get("/tokens/resetWithLink/"+uuid)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtro.write(new PasswordResetObject("password", uuid, new UUID(0, 0))).getJson()))
+				.andExpect(status().isUnauthorized());
+	}
+	
+	@Test
+	void resetWithLinkException() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalToken());
+		mvc.perform(get("/tokens/resetWithLink/"+uuid)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtro.write(new PasswordResetObject("password", uuid, uuid)).getJson()))
+				.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	void resetWithLinkException2() throws Exception {
+		when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+		mvc.perform(get("/tokens/resetWithLink/"+uuid)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtro.write(new PasswordResetObject("password", uuid, uuid)).getJson()))
+				.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	void resetWithLinkInvalidToken() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalInvalidToken());
+		when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+		
+		mvc.perform(put("/tokens/reset/confirm")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtro.write(new PasswordResetObject("password", uuid, uuid)).getJson()))
+				.andExpect(status().isUnauthorized());
+	}
+	
+	@Test
+	void resetWithLinkInvalidUser() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalInvalidToken());
+		when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+		mvc.perform(put("/tokens/reset/confirm")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtro.write(new PasswordResetObject("password", uuid, uuid)).getJson()))
+				.andExpect(status().isUnauthorized());
 	}
 	
 	@Test
