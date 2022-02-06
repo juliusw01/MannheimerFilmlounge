@@ -8,7 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.model.User;
 
 public interface UserRepository extends CrudRepository<User, UUID>{
-	
 	Optional<User> findByuserName(String userName);
 	Optional<User> findByemail(String email);
 }

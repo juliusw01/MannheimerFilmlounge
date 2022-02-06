@@ -227,6 +227,7 @@ public class TicketControllerTest {
 	@Test
 	void testCancelTicket() throws Exception {
 		when(repo.findById(uuid)).thenReturn(getOptionalTicket());
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(false));
 		mvc.perform(put("/tickets/cancel/"+uuid)
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());

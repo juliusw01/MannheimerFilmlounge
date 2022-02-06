@@ -121,7 +121,7 @@ public class TicketController {
 		Seat seat = new Seat();
 		try {
 			ticket = repo.findById(id).get();
-			seat = seatRepository.findByTicket(ticket).get();
+			seat = seatRepository.findById(ticket.getSeat().getId()).get();
 			seat.setBlocked(false);
 			seat.setBooked(false);
 			ticket.setCanceled(true);
