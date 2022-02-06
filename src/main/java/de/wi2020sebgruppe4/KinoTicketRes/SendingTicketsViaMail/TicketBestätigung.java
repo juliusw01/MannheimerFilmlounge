@@ -12,13 +12,13 @@ import java.util.Date;
 
 public class TicketBestätigung {
 
-    public static Message prepareMessage(Session session, String myAccount, String empfaenger, String titel, Date date, Date time){
+    public static Message prepareMessage(Session session, String myAccount, String empfaenger, String titel, String vorname){
         try {
             Message message = new MimeMessage(session);
 
             message.setFrom(new InternetAddress(myAccount));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(empfaenger));
-            message.setSubject("Buchungsbestätigung Kinoticket");
+            message.setSubject("Deine Buchung war erfolgreich!");
 
             //message.setText("Das ist eine Test Mail. Hat es geklappt?");
 
@@ -28,15 +28,16 @@ public class TicketBestätigung {
             // Body-Part setzen:
             BodyPart messageBodyPart = new MimeBodyPart();
             // Textteil des Body-Parts
-            messageBodyPart.setText("Lieber Kunde, \n \nvielen Dank für Ihre Buchung! \n \n" +
-                    "Viel Spaß bei dem Film " + titel + " \n" +
-                    "Sie haben die Vorstellung am " + date + " um " + time + "Uhr gebucht.\n \n" +
-                    "Einen angenehmen Aufenthalt wünscht Ihnen \n " +
-                    "Gruppe 4");
+            messageBodyPart.setText("Hallo " + vorname + ", \n \nvielen Dank für Deine Buchung! \n \n" +
+                    "Hiermit bestätigen wir deine Buchung zu dem Film " + titel + ". \n\n" +
+                    //"Sie haben die Vorstellung am " + date + " um " + time + "Uhr gebucht.\n \n" +
+                    "Einen angenehmen Aufenthalt und viel Spaß wünscht Dir " +
+                    "die Mannheimer Filmlounge");
             // Body-Part dem Multipart-Wrapper hinzufügen
             multipart.addBodyPart(messageBodyPart);
             // Message fertigstellen, indem sie mit dem Multipart-Content ausgestattet wird
-            message.setContent(JavaMailHtml.getJavaMailHtml(), "text/html");
+            //message.setContent(JavaMailHtml.getJavaMailHtml(), "text/html");
+            message.setContent(multipart);
 
             return message;
         }catch (Exception e){

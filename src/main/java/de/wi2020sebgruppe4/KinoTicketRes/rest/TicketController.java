@@ -108,9 +108,8 @@ public class TicketController {
 
 		User user = userRepository.findById(tro.userID).get();
 		Movie movie = showRepository.findById(tro.showID).get().getMovie();
-		Show show = showRepository.findById(tro.showID).get();
 		
-		JavaMail.sendTicketConformationMail(user.getEmail(), movie.getTitel(), show.getShowDate(), show.getStartTime());
+		JavaMail.sendTicketConformationMail(user.getEmail(), movie.getTitel(), user.getFirstName());
 		
 		seatRepository.save(toBook);
 		return new ResponseEntity<Object>(repo.save(toAdd), HttpStatus.CREATED);
