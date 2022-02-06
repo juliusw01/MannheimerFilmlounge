@@ -10,9 +10,7 @@ public class JavaMailTest {
 
     public static void main(String[] args) {
         try {
-            Date date = new Date();
             JavaMail.sendTicketConformationMail("jwa_home@hotmail.de", "Terminator", "Julius");
-            //System.out.println(System.currentTimeMillis());
         } catch (Exception e) {
             e.printStackTrace();
         }

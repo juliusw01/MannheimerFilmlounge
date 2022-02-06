@@ -32,7 +32,7 @@ public class TicketBestätigung {
                     "Hiermit bestätigen wir deine Buchung zu dem Film " + titel + ". \n\n" +
                     //"Sie haben die Vorstellung am " + date + " um " + time + "Uhr gebucht.\n \n" +
                     "Einen angenehmen Aufenthalt und viel Spaß wünscht Dir " +
-                    "die Mannheimer Filmlounge");
+                    "die Mannheimer Film Lounge");
             // Body-Part dem Multipart-Wrapper hinzufügen
             multipart.addBodyPart(messageBodyPart);
             // Message fertigstellen, indem sie mit dem Multipart-Content ausgestattet wird
