@@ -8,10 +8,11 @@ import org.springframework.data.repository.CrudRepository;
 
 import de.wi2020sebgruppe4.KinoTicketRes.model.Seat;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Show;
+import de.wi2020sebgruppe4.KinoTicketRes.model.Ticket;
 
 public interface SeatRepository extends CrudRepository<Seat, UUID> {
 	
 	Optional<List<Seat>> findAllByShow(Show show);
-
+	Optional<Seat> findByTicket(Ticket ticket);
 }
 	

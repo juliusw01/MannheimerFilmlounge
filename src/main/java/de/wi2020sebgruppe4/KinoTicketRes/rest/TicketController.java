@@ -118,12 +118,17 @@ public class TicketController {
 	@PutMapping("/cancel/{id}")
 	public ResponseEntity<Object> cancelTicket(@PathVariable UUID id) {
 		Ticket ticket = new Ticket();
+		Seat seat = new Seat();
 		try {
 			ticket = repo.findById(id).get();
+			seat = seatRepository.findByTicket(ticket).get();
+			seat.setBlocked(false);
+			seat.setBooked(false);
 			ticket.setCanceled(true);
+			seatRepository.save(seat);
 			repo.save(ticket);
 		} catch (NoSuchElementException e) {
-			return new ResponseEntity<Object>("Ticket "+ id +" not found!", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>("Ticket "+ id +" not found! / No seats blocked for this ticket", HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Object>("Ticket canceled", HttpStatus.OK);
 	}
