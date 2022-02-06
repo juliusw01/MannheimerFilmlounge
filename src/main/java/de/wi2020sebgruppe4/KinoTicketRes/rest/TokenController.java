@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -85,8 +86,9 @@ public class TokenController {
     @GetMapping("/resetWithLink/{tokenID}")
     public ResponseEntity<Object> doResetWithLink(@RequestBody PasswordResetObject pro, @PathVariable UUID tokenID) {
         Optional<Token> t = repo.findById(tokenID);
+        Token token = null;
         try {
-            Token token = t.get();
+            token = t.get();
 
             // Check if its the same user that requested the reset
             if(!pro.userID.toString().equals(token.getUser().getId().toString())) {
@@ -98,7 +100,7 @@ public class TokenController {
                 return new ResponseEntity<Object>("Token is not valid! Was it used already?", HttpStatus.UNAUTHORIZED);
             }
 
-            token.setValid(false);
+            
             Optional<User> u = userRepository.findById(token.getUser().getId());
             try {
                 User user = u.get();
@@ -112,7 +114,8 @@ public class TokenController {
         catch (NoSuchElementException e) {
             return new ResponseEntity<Object>("Token not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Object>("False input", HttpStatus.BAD_REQUEST);
+        token.setValid(false);
+        return new ResponseEntity<Object>("New password set!", HttpStatus.OK);
     }
 
     @PutMapping("/reset/confirm")
@@ -150,7 +153,7 @@ public class TokenController {
         return null;
     }
 
-    @PutMapping("/deleteAll")
+    @DeleteMapping("/deleteAll")
     public ResponseEntity<Object> deleteAll() {
         repo.deleteAll();
         return new ResponseEntity<Object>("deleted all Tokens", HttpStatus.OK);

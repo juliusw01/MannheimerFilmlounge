@@ -259,4 +259,10 @@ public class ReviewControllerTest {
 		.andExpect(status().isNotFound());
 	}
 	
+	@Test
+	void testDeleteAll() throws Exception {
+		mvc.perform(delete("/reviews/all"))
+		.andExpect(status().isOk());
+	}
+	
 }

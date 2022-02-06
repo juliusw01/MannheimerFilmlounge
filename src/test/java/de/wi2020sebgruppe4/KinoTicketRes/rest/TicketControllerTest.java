@@ -127,6 +127,12 @@ public class TicketControllerTest {
 		return Optional.of(u);
 	}
 	
+	Optional<User> getOptionalUserNoEmail() {
+		User u = getUser();
+		u.setEmail(null);
+		return Optional.of(u);
+	}
+	
 	Optional<Seat> getOptionalSeat(boolean blocked) {
 		Seat s = getSeat(blocked);
 		return Optional.of(s);
@@ -204,6 +210,51 @@ public class TicketControllerTest {
 				.content(jtco.write(new TicketRequestObject(uuid, uuid, 2.0, null, 2)).getJson()))
 				.andExpect(status().isNotFound());
 	}
+	/*
+	@Test
+	void testAddTicketNoUserMail() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalTicket());
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(false));
+		when(userRepository.findById(uuid)).thenReturn(getOptionalUserNoEmail());
+		when(showRepository.findById(uuid)).thenReturn(getOptionalShow());
+		mvc.perform(put("/tickets/add")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jtco.write(new TicketRequestObject(uuid, uuid, 2.0, null, 2)).getJson()))
+				.andExpect(status().isInternalServerError());
+	}
+	*/
+	
+	@Test
+	void testCancelTicket() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalTicket());
+		mvc.perform(put("/tickets/cancel/"+uuid)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	void testCancelTicketException() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalTicket());
+		mvc.perform(put("/tickets/cancel/"+new UUID(0, 0))
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	void testUnCancelTicket() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalTicket());
+		mvc.perform(put("/tickets/uncancel/"+uuid)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	void testUnCancelTicketException() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalTicket());
+		mvc.perform(put("/tickets/uncancel/"+new UUID(0, 0))
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
+	}
 	
 	@Test
 	void testAddTicketNoUser() throws Exception {
@@ -263,5 +314,11 @@ public class TicketControllerTest {
 		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(false));
 		mvc.perform(delete("/tickets/"+uuid))
 		.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	void testDeleteAll() throws Exception {
+		mvc.perform(delete("/tickets/all"))
+		.andExpect(status().isOk());
 	}
 }

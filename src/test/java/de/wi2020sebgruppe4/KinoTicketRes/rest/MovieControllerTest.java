@@ -134,6 +134,14 @@ public class MovieControllerTest {
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound());
 	}
+	
+	@Test 
+	void testGetShowsByIdException2() throws Exception {
+		when(repo.findById(uuid)).thenReturn(getOptionalMovie());
+		mvc.perform(get("/movies/"+uuid+"/shows")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
+	}
 		
 	@Test
 	void testUpdateMovie() throws Exception {
@@ -172,5 +180,11 @@ public class MovieControllerTest {
 		when(repo.findById(new UUID(0, 0))).thenReturn(getOptionalMovie());
 		mvc.perform(delete("/movies/"+uuid))
 				.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	void testDeleteAll() throws Exception {
+		mvc.perform(delete("/movies/all"))
+		.andExpect(status().isOk());
 	}
 }

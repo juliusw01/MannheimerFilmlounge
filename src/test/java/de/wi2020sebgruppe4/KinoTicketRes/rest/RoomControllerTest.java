@@ -198,4 +198,10 @@ public class RoomControllerTest {
 				.andExpect(status().isNotFound());
 	}
 	
+	@Test
+	void testDeleteAll() throws Exception {
+		mvc.perform(delete("/rooms/all"))
+		.andExpect(status().isOk());
+	}
+	
 }

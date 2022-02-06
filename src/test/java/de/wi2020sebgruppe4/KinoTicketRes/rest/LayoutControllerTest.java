@@ -196,4 +196,10 @@ public class LayoutControllerTest {
 		mvc.perform(delete("/layouts/"+uuid))
 		.andExpect(status().isNotFound());
 	}
+	
+	@Test
+	void testDeleteAll() throws Exception {
+		mvc.perform(delete("/layouts/all"))
+		.andExpect(status().isOk());
+	}
 }
