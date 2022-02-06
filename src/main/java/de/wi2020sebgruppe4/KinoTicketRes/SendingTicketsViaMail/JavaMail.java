@@ -23,6 +23,8 @@ public class JavaMail {
 
         Properties properties = setProperties();
 
+        empfaenger.trim();
+
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -35,11 +37,12 @@ public class JavaMail {
         Message message = TicketBestätigung.prepareMessage(session, myAccount, empfaenger, movieTitel, vorname);
         try {
 			Transport.send(message);
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} // E-Mail senden!
     }
 
+    /*
     public static void sendMailAdressConformationLink(String empfaenger, String conformationLink) throws MessagingException {
         Properties properties = setProperties();
 
@@ -55,4 +58,6 @@ public class JavaMail {
         Message message = MailBestätigen.prepareMessag(session, myAccount, empfaenger);
         Transport.send(message); // E-Mail senden!
     }
+
+     */
 }

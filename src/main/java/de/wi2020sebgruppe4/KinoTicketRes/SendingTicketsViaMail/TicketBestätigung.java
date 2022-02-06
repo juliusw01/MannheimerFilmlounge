@@ -1,9 +1,6 @@
 package de.wi2020sebgruppe4.KinoTicketRes.SendingTicketsViaMail;
 
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.Multipart;
-import javax.mail.Session;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -14,6 +11,9 @@ public class TicketBestätigung {
 
     public static Message prepareMessage(Session session, String myAccount, String empfaenger, String titel, String vorname){
         try {
+
+            empfaenger.trim();
+
             Message message = new MimeMessage(session);
 
             message.setFrom(new InternetAddress(myAccount));
@@ -41,9 +41,8 @@ public class TicketBestätigung {
 
             return message;
         }catch (Exception e){
-            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
 }

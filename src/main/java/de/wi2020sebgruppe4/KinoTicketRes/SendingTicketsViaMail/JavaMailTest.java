@@ -9,11 +9,9 @@ import java.util.Locale;
 public class JavaMailTest {
 
     public static void main(String[] args) {
-        try {
-            JavaMail.sendTicketConformationMail("jwa_home@hotmail.de", "Terminator", "Julius");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        JavaMail.sendTicketConformationMail("jwa_home@hotmail.de", "Terminator", "Julius");
+
     }
 
 }
