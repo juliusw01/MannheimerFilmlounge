@@ -84,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Filt
         return source;
     }
     
+    /*
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse res = (HttpServletResponse) response;
@@ -94,4 +95,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Filt
         res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept, x-requested-with, Cache-Control");
         chain.doFilter(request, res);
     }
+    */
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {}
+    
 } 
