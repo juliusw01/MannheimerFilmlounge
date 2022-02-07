@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import de.wi2020sebgruppe4.KinoTicketRes.SendingTicketsViaMail.JavaMail;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Movie;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Seat;
-import de.wi2020sebgruppe4.KinoTicketRes.model.Show;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Ticket;
 import de.wi2020sebgruppe4.KinoTicketRes.model.TicketRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.User;
@@ -58,6 +57,9 @@ public class TicketController {
 	
 	@Autowired
 	ShowRepository showRepository;
+	
+	@Autowired
+	JavaMail mail;
 	
 	@GetMapping("")
 	public ResponseEntity<Object> getAll(){
@@ -109,7 +111,7 @@ public class TicketController {
 		User user = userRepository.findById(tro.userID).get();
 		Movie movie = showRepository.findById(tro.showID).get().getMovie();
 		
-		JavaMail.sendTicketConformationMail(user.getEmail().trim(), movie.getTitel(), user.getFirstName());
+		mail.sendTicketConformationMail(user.getEmail().trim(), movie.getTitel(), user.getFirstName());
 		
 		seatRepository.save(toBook);
 		return new ResponseEntity<Object>(repo.save(toAdd), HttpStatus.CREATED);
