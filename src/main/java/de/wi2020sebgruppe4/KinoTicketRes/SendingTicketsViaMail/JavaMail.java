@@ -76,16 +76,16 @@ public class JavaMail {
             // Body-Part setzen:
             BodyPart messageBodyPart = new MimeBodyPart();
             // Textteil des Body-Parts
-            messageBodyPart.setText("Hallo " + vorname + ", \n \nvielen Dank für Deine Buchung! \n \n" +
-                    "Hiermit bestätigen wir deine Buchung zu dem Film " + titel + ". \n\n" +
-                    //"Sie haben die Vorstellung am " + date + " um " + time + "Uhr gebucht.\n \n" +
-                    "Einen angenehmen Aufenthalt und viel Spaß wünscht Dir " +
-                    "die Mannheimer Film Lounge");
+            messageBodyPart.setText("");
             // Body-Part dem Multipart-Wrapper hinzufügen
             multipart.addBodyPart(messageBodyPart);
             // Message fertigstellen, indem sie mit dem Multipart-Content ausgestattet wird
             //message.setContent(JavaMailHtml.getJavaMailHtml(), "text/html");
-            message.setContent(multipart);
+            message.setContent("Hallo " + vorname + ", \n \nvielen Dank für Deine Buchung! \n \n" +
+                    "Hiermit bestätigen wir deine Buchung zu dem Film " + titel + ". \n\n" +
+                    //"Sie haben die Vorstellung am " + date + " um " + time + "Uhr gebucht.\n \n" +
+                    "Einen angenehmen Aufenthalt und viel Spaß wünscht Dir " +
+                    "die Mannheimer Film Lounge", "text/html");
 
             return message;
         }catch (Exception e){
