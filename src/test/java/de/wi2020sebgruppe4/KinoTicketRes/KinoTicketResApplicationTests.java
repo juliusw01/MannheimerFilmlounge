@@ -34,8 +34,7 @@ class KinoTicketResApplicationTests {
 	
 	@Test
 	void mainTest() {
-		//KinoTicketResApplication.main(new String[] {"localhost"});
-		
+		//KinoTicketResApplication.main(new String[] {});
 	}
 	
 	

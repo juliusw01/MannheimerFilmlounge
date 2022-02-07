@@ -7,7 +7,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class KinoTicketResApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(KinoTicketResApplication.class, args);
-	}
-
+		SpringApplication.run(KinoTicketResApplication.class, args);}
 }
