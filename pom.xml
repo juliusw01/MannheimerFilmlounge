@@ -150,6 +150,12 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+			        <excludes>
+			            <exclude>**/de.wi2020sebgruppe4.KinoTicketRes/*</exclude>
+			             <exclude>**/de.wi2020sebgruppe4.KinoTicketRes/KinoTicketResApplication.java</exclude>
+			        </excludes>
+			     </configuration>
                 <version>0.8.7</version>
                 <executions>
                     <execution>

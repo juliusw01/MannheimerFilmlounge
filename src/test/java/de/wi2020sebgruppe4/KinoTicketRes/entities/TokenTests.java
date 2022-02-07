@@ -36,6 +36,8 @@ static UUID uuid;
 	@Test
 	public void testEquals() {
 		User u = new User();
+		User u2 = new User();
+		u2.setId(uuid);
 		Token t = new Token(true, u);
 		t.setId(uuid);
 		Token t2 = new Token(true, u);
@@ -52,6 +54,8 @@ static UUID uuid;
 		assertEquals(false, t.equals(t4));
 		assertEquals(false, t.equals(null));
 		assertEquals(false, t.equals(new User()));
+		t2.setUser(u2);
+		assertEquals(false, t.equals(t2));
 	}
 	
 }
